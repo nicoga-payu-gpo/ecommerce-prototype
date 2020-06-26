@@ -1,3 +1,7 @@
+/*
+ * PayU Latam - Copyright (c) 2013 - 2020
+ * http://www.payu.com.co
+ */
 package com.prototype.ecommerce.services;
 
 import com.prototype.ecommerce.model.Order;
@@ -88,7 +92,7 @@ class OrderServiceImplTest {
 	}
 
 	/**
-	 * Test the {@linkplain OrderServiceImpl#getOrdersByUser(User)} method.
+	 * Test the {@linkplain OrderServiceImpl#getOrdersByUser(String)}  method.
 	 *
 	 * @author Nicolas Garcia Rey (nicolas.garcia@payulatam.com)
 	 * @date 25/06/2020

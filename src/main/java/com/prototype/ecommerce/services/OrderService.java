@@ -39,7 +39,7 @@ public interface OrderService {
 	 * @param email User email to query.
 	 * @return The orders placed with the given user email.
 	 */
-	Collection<Order> getOrdersByUser(User user);
+	Collection<Order> getOrdersByUser(String email);
 
 	/**
 	 * Update an existing order.

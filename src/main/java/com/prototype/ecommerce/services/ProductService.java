@@ -15,4 +15,26 @@ import com.prototype.ecommerce.model.Product;
  */
 public interface ProductService {
 
+	/**
+	 * Create a new product.
+	 *
+	 * @param product new product.
+	 * @return created product.
+	 */
+	Product createProduct(Product product);
+
+	/**
+	 * Return all the products of the platform.
+	 *
+	 * @return All the products of the platform.
+	 */
+	Iterable<Product> getProducts();
+
+	/**
+	 * Updates an existing product int the platform.
+	 *
+	 * @param product Product update.
+	 * @return Updated product.
+	 */
+	Product updateProduct(Product product);
 }

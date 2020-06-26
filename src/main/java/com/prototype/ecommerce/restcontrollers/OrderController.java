@@ -4,11 +4,12 @@
  */
 package com.prototype.ecommerce.restcontrollers;
 
+import com.prototype.ecommerce.model.Order;
+import com.prototype.ecommerce.model.User;
 import com.prototype.ecommerce.services.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Controller for the platform orders.
@@ -17,25 +18,96 @@ import org.springframework.web.bind.annotation.RestController;
  * @version 1.0
  * @since 1.0
  */
+@RequestMapping("API/orders")
 @RestController
 public class OrderController {
 
+	/**
+	 * Service for entity {@linkplain Order}.
+	 */
 	private final OrderService orderService;
 
+	/**
+	 * The overload constructor method of class.
+	 *
+	 * @param orderService The order service.
+	 */
 	public OrderController(OrderService orderService) {
 
 		this.orderService = orderService;
 	}
 
-	@GetMapping("/orders")
-	public ResponseEntity<?> getOrdersHandler() {
+	/**
+	 * Returns all the orders placed in the platform.
+	 *
+	 * @return All orders placed in the platform.
+	 */
+	@GetMapping
+	public ResponseEntity<Iterable<Order>> getOrdersHandler() {
 
 		try {
-
-			return new ResponseEntity<>(orderService.getOrders(), HttpStatus.ACCEPTED);
+			Iterable<Order> orders = orderService.getOrders();
+			for (Order o : orders) {
+				o.getUser().setPassword("");
+				o.getUser().setRole("");
+			}
+			return new ResponseEntity<>(orders, HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
 
-			return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}
 	}
+
+	/**
+	 * Return all the orders placed in the platform by an specific user.
+	 *
+	 * @param email User email.
+	 * @return All the order placed by the user with the given email.
+	 */
+	@GetMapping("/{userId}")
+	public ResponseEntity<Iterable<Order>> getOrdersByUserId(@PathVariable("userId") String email) {
+		try {
+
+			return new ResponseEntity<>(orderService.getOrdersByUser(email), HttpStatus.ACCEPTED);
+		} catch (Exception ex) {
+
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+	}
+
+	/**
+	 * Creates a new order in the platform.
+	 *
+	 * @param order Order to create.
+	 * @return Created order.
+	 */
+	@PostMapping
+	public ResponseEntity<Order> createOrderHandler(@RequestBody Order order) {
+		try {
+
+			return new ResponseEntity<>(orderService.createOrder(order), HttpStatus.ACCEPTED);
+		} catch (Exception ex) {
+
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+	}
+
+	/**
+	 * Update an existing order.
+	 *
+	 * @param order Order with the updated values.
+	 * @return Updated order.
+	 */
+	@PutMapping
+	public ResponseEntity<Order> updateOrderHandler(@RequestBody Order order) {
+		try {
+
+			return new ResponseEntity<>(orderService.updateOrder(order), HttpStatus.ACCEPTED);
+		} catch (Exception ex) {
+
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+	}
+
+
 }

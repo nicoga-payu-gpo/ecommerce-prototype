@@ -7,7 +7,7 @@ package com.prototype.ecommerce.services;
 import com.prototype.ecommerce.model.Order;
 import com.prototype.ecommerce.model.User;
 import com.prototype.ecommerce.repositories.OrderRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
@@ -18,7 +18,7 @@ import java.util.Collection;
  * @version 1.0
  * @since 1.0
  */
-@Component
+@Service
 public class OrderServiceImpl implements OrderService {
 
 	/**
@@ -55,9 +55,9 @@ public class OrderServiceImpl implements OrderService {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override public Collection<Order> getOrdersByUser(User user) {
+	@Override public Collection<Order> getOrdersByUser(String email) {
 
-		return orderRepository.getOrdersByUser(user);
+		return orderRepository.getOrdersByUser(new User("",email,""));
 	}
 
 	/**
