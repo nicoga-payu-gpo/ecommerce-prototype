@@ -25,10 +25,8 @@ public class Order implements Serializable {
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	@Column(name = "order_id",
-			unique = true,
-			nullable = false,
-			length = 20)
-	private String	id;
+			unique = true)
+	private int id;
 
 	/**
 	 * State of the order
@@ -100,7 +98,7 @@ public class Order implements Serializable {
 	 * @param product Product of the order.
 	 * @param user User who owns the order.
 	 */
-	public Order(String id, String state, float total, Date date, String transactionId,
+	public Order(int id, String state, float total, Date date, String transactionId,
 				 String paymentOrderId, int units, Product product,
 				 User user) {
 
@@ -120,12 +118,12 @@ public class Order implements Serializable {
 		this.user = user;
 	}
 
-	public String getId() {
+	public int getId() {
 
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 
 		this.id = id;
 	}

@@ -56,12 +56,12 @@ class OrderControllerTest {
 	@BeforeEach
 	private void initUseCase() {
 
-		Product p = new Product("GHJSAGDJA", "PRODUCT1", "Product desc", 100, 15000);
+		Product p = new Product(11, "PRODUCT1", "Product desc", 100, 15000);
 		User u = new User("Nicolas", "HJGUJ", "nicoga97@gmail.com", "ROLE_ADMIN");
 		User u2 = new User("Camilo", "HJGUJfdg", "camilo@gmail.com", "ROLE_ADMIN");
-		Order order1 = new Order("HKH", "APROVED", 150000, new Date(),
+		Order order1 = new Order(1, "APROVED", 150000, new Date(),
 				"ghjkkj", "klhjk", 10, p, u2);
-		Order order2 = new Order("HdsfKH", "PENDING", 15000, new Date(),
+		Order order2 = new Order(2, "PENDING", 15000, new Date(),
 				"ghjkHkj", "klHJJhjk", 1, p,
 				u);
 		orders = new ArrayList<>();

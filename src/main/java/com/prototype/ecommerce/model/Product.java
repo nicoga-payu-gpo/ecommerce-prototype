@@ -24,10 +24,8 @@ public class Product implements Serializable {
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	@Column(name = "product_id",
-			unique = true,
-			nullable = false,
-			length = 20)
-	private String id;
+			unique = true)
+	private int id;
 
 	/**
 	 *  Product name.
@@ -69,7 +67,7 @@ public class Product implements Serializable {
 	 * @param availableUnits Units available for purchase of the product.
 	 * @param price Price per unit of the product.
 	 */
-	public Product(String id, String name, String description, int availableUnits, float price) {
+	public Product(int id, String name, String description, int availableUnits, float price) {
 
 		this.id = id;
 		this.name = name;
@@ -83,7 +81,7 @@ public class Product implements Serializable {
 	 *
 	 * @return Id of the product.
 	 */
-	public String getId() {
+	public int getId() {
 
 		return id;
 	}
@@ -93,7 +91,7 @@ public class Product implements Serializable {
 	 *
 	 * @param id Product id.
 	 */
-	public void setId(String id) {
+	public void setId(int id) {
 
 		this.id = id;
 	}

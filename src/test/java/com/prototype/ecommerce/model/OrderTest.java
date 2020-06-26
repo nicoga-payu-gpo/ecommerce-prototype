@@ -32,8 +32,8 @@ public class OrderTest {
 		float rightLimit = 10F;
 		float generatedPrice = leftLimit + new Random().nextFloat() * (rightLimit - leftLimit);
 		int generateUnits= new Random().nextInt();
-		Product p= new Product("GHJSAGDJA","PRODUCT1","Product desc",100,generatedPrice);
-		Order o= new Order("HKH","APROVED",0,new Date(),
+		Product p= new Product(1,"PRODUCT1","Product desc",100,generatedPrice);
+		Order o= new Order(2,"APROVED",0,new Date(),
 				"ghjkkj","klhjk",generateUnits,p,new User());
 		assertThat(o.getTotal()).isEqualTo(generatedPrice*generateUnits);
 

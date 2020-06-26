@@ -49,7 +49,7 @@ class ProductServiceImplTest {
 	@Test
 	void createProductTest() {
 
-		Product p = new Product("dfgdfg", "Product1", "Description example", 100, 15000);
+		Product p = new Product(1, "Product1", "Description example", 100, 15000);
 		when(productRepository.save(any(Product.class))).then(returnsFirstArg());
 		assertEquals(p, productService.createProduct(p));
 	}
@@ -63,8 +63,8 @@ class ProductServiceImplTest {
 	@Test
 	void getProductsTest() {
 
-		Product p = new Product("dfgdfg", "Product1", "Description example", 100, 15000);
-		Product p2 = new Product("dfgdfdffg", "Product2", "Description example", 22, 10000);
+		Product p = new Product(1, "Product1", "Description example", 100, 15000);
+		Product p2 = new Product(2, "Product2", "Description example", 22, 10000);
 		ArrayList<Product> products = new ArrayList<>();
 		products.add(p);
 		products.add(p2);
@@ -81,7 +81,7 @@ class ProductServiceImplTest {
 	@Test
 	void updateProductTest() {
 
-		Product p = new Product("dfgdfg", "Product1", "Description ", 10, 15000);
+		Product p = new Product(1, "Product1", "Description ", 10, 15000);
 		when(productRepository.save(any(Product.class))).then(returnsFirstArg());
 		assertEquals(p, productService.updateProduct(p));
 	}

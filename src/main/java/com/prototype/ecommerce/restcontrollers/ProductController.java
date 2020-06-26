@@ -45,7 +45,7 @@ public class ProductController {
 			return new ResponseEntity<>(productService.getProducts(), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
 
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -63,7 +63,7 @@ public class ProductController {
 			return new ResponseEntity<>(productService.createProduct(product), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
 
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -80,7 +80,7 @@ public class ProductController {
 			return new ResponseEntity<>(productService.updateProduct(product), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
 
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 }

@@ -54,7 +54,7 @@ public class OrderController {
 			return new ResponseEntity<>(orders, HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
 
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -71,7 +71,7 @@ public class OrderController {
 			return new ResponseEntity<>(orderService.getOrdersByUser(email), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
 
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -88,7 +88,7 @@ public class OrderController {
 			return new ResponseEntity<>(orderService.createOrder(order), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
 
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>( HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -105,7 +105,7 @@ public class OrderController {
 			return new ResponseEntity<>(orderService.updateOrder(order), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
 
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 

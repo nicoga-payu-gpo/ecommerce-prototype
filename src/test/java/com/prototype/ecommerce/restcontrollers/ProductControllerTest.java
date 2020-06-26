@@ -50,8 +50,8 @@ class ProductControllerTest {
 	@Test
 	void getProductsHandlerTest() {
 
-		Product p = new Product("dfgdfg", "Product1", "Description example", 100, 15000);
-		Product p2 = new Product("dfgdfdffg", "Product2", "Description example", 22, 10000);
+		Product p = new Product(2, "Product1", "Description example", 100, 15000);
+		Product p2 = new Product(1, "Product2", "Description example", 22, 10000);
 		ArrayList<Product> products = new ArrayList<>();
 		products.add(p);
 		products.add(p2);
@@ -68,7 +68,7 @@ class ProductControllerTest {
 	@Test
 	void createProductHandlerTest() {
 
-		Product p = new Product("dfgdfg", "Product1", "Description example", 100, 15000);
+		Product p = new Product(1, "Product1", "Description example", 100, 15000);
 		when(productService.createProduct(any(Product.class))).then(returnsFirstArg());
 		assertEquals(p, productController.createProductHandler(p).getBody());
 	}
@@ -82,7 +82,7 @@ class ProductControllerTest {
 	@Test
 	void updateProductHandlerTest() {
 
-		Product p = new Product("dfgdfg", "Product1", "Description example", 100, 15000);
+		Product p = new Product(1, "Product1", "Description example", 100, 15000);
 		when(productService.updateProduct(any(Product.class))).then(returnsFirstArg());
 		assertEquals(p, productController.updateProductHandler(p).getBody());
 	}
