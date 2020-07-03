@@ -15,4 +15,21 @@ import com.prototype.ecommerce.model.User;
  */
 public interface UserService {
 
+	/**
+	 * Creates a new user.
+	 *
+	 * @param user User to create.
+	 * @return Created user.
+	 */
+	User createUser(User user);
+
+	/**
+	 * Get an specific user based on it's email.
+	 *
+	 * @param email User email.
+	 * @return User with the provided email.
+	 */
+	User getUser(String email);
+
+
 }

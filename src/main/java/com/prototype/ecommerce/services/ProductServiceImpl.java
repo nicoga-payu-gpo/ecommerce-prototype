@@ -56,4 +56,13 @@ public class ProductServiceImpl implements ProductService {
 
 		return productRepository.save(product);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override public void deleteProduct(int id) {
+		Product p=new Product();
+		p.setId(id);
+		productRepository.delete(p);
+	}
 }

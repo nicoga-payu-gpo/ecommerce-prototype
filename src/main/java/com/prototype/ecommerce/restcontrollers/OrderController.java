@@ -5,10 +5,10 @@
 package com.prototype.ecommerce.restcontrollers;
 
 import com.prototype.ecommerce.model.Order;
-import com.prototype.ecommerce.model.User;
 import com.prototype.ecommerce.services.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -42,6 +42,7 @@ public class OrderController {
 	 *
 	 * @return All orders placed in the platform.
 	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping
 	public ResponseEntity<Iterable<Order>> getOrdersHandler() {
 
@@ -64,6 +65,7 @@ public class OrderController {
 	 * @param email User email.
 	 * @return All the order placed by the user with the given email.
 	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/{userId}")
 	public ResponseEntity<Iterable<Order>> getOrdersByUserId(@PathVariable("userId") String email) {
 		try {
@@ -98,6 +100,7 @@ public class OrderController {
 	 * @param order Order with the updated values.
 	 * @return Updated order.
 	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PutMapping
 	public ResponseEntity<Order> updateOrderHandler(@RequestBody Order order) {
 		try {

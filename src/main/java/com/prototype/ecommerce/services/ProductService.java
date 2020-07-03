@@ -37,4 +37,11 @@ public interface ProductService {
 	 * @return Updated product.
 	 */
 	Product updateProduct(Product product);
+
+	/**
+	 * Delete the product with the provided id.
+	 *
+	 * @param id Id of the product to delete.
+	 */
+	void deleteProduct(int id);
 }

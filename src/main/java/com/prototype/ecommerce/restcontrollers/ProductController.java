@@ -4,11 +4,11 @@
  */
 package com.prototype.ecommerce.restcontrollers;
 
-import com.prototype.ecommerce.model.Order;
 import com.prototype.ecommerce.model.Product;
 import com.prototype.ecommerce.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -27,6 +27,11 @@ public class ProductController {
 	 */
 	private final ProductService productService;
 
+	/**
+	 * The overload constructor method of class.
+	 *
+	 * @param productService The product service.
+	 */
 	public ProductController(ProductService productService) {
 
 		this.productService = productService;
@@ -55,6 +60,7 @@ public class ProductController {
 	 * @param product Order to create.
 	 * @return Created order.
 	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping
 	public ResponseEntity<Product> createProductHandler(@RequestBody Product product) {
 
@@ -73,14 +79,34 @@ public class ProductController {
 	 * @param product product with the updated values.
 	 * @return Updated product.
 	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PutMapping
 	public ResponseEntity<Product> updateProductHandler(@RequestBody Product product) {
+
 		try {
 
 			return new ResponseEntity<>(productService.updateProduct(product), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
 
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	/**
+	 * Delete an existing product.
+	 *
+	 * @param id id of the product to delete.
+	 * @return Confirmation response.
+	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> updateProductHandler(@PathVariable String id) {
+
+		try {
+			productService.deleteProduct(Integer.parseInt(id));
+			return new ResponseEntity<>(HttpStatus.ACCEPTED);
+		} catch (Exception ex) {
+			return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
 }

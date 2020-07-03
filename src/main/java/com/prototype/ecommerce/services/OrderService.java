@@ -5,7 +5,6 @@
 package com.prototype.ecommerce.services;
 
 import com.prototype.ecommerce.model.Order;
-import com.prototype.ecommerce.model.User;
 
 import java.util.Collection;
 
