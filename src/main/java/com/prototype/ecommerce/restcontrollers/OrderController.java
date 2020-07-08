@@ -5,6 +5,7 @@
 package com.prototype.ecommerce.restcontrollers;
 
 import com.prototype.ecommerce.model.Order;
+import com.prototype.ecommerce.model.dtos.OrderDto;
 import com.prototype.ecommerce.services.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -84,13 +85,13 @@ public class OrderController {
 	 * @return Created order.
 	 */
 	@PostMapping
-	public ResponseEntity<Order> createOrderHandler(@RequestBody Order order) {
+	public ResponseEntity<Order> createOrderHandler(@RequestBody OrderDto order) {
+
 		try {
 
 			return new ResponseEntity<>(orderService.createOrder(order), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
-
-			return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 

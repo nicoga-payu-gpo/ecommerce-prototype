@@ -5,6 +5,7 @@
 package com.prototype.ecommerce.services;
 
 import com.prototype.ecommerce.model.Order;
+import com.prototype.ecommerce.model.dtos.OrderDto;
 
 import java.util.Collection;
 
@@ -23,7 +24,7 @@ public interface OrderService {
 	 * @param order Order to create.
 	 * @return Created order.
 	 */
-	Order createOrder(Order order);
+	Order createOrder(OrderDto order);
 
 	/**
 	 * Returns all the orders that has been placed.

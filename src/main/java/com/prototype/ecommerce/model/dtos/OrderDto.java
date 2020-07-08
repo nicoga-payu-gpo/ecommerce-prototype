@@ -2,130 +2,141 @@
  * PayU Latam - Copyright (c) 2013 - 2020
  * http://www.payu.com.co
  */
-package com.prototype.ecommerce.model;
+package com.prototype.ecommerce.model.dtos;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import com.prototype.ecommerce.model.Address;
+import com.prototype.ecommerce.model.Product;
+import com.prototype.ecommerce.model.User;
+
 import java.util.Date;
 
 /**
- * Order definition.
+ * Order dto definition.
  *
  * @author Nicolas Garcia (nicolas.garcia@payulatam.com)
  * @version 1.0
  * @since 1.0
  */
-@Entity
-@Table(schema="public",name="order")
-public class Order implements Serializable {
+public class OrderDto {
 
 	/**
 	 * Order id.
 	 */
-	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
-	@Column(name = "order_id",
-			unique = true)
 	private int id;
 
 	/**
 	 * Status of the order
 	 */
-	@Column(name = "state")
 	private String state;
 
 	/**
 	 * Total price of the item(s) in the order.
 	 */
-	@Column(name = "total")
 	private float total;
 
 	/**
 	 * Date in which the order was placed.
 	 */
-	@Column(name = "date")
 	private Date date;
 
 	/**
 	 * Payment transaction id.
 	 */
-	@Column(name = "transaction_id")
 	private String transactionId;
 
 	/**
 	 * Payment order id.
 	 */
-	@Column(name = "payment_order_id")
 	private String paymentOrderId;
 
 	/**
 	 * Number of units of the product.
 	 */
-	@Column(name = "units")
 	private int units;
 
 	/**
-	 * Dni number of the buyer.
+	 * Buyer DNI number.
 	 */
-	@Column(name = "buyerdninumber")
 	private int buyerDniNumber;
 
 	/**
-	 * Buyer phone number.
+	 * Buyer phone number,
 	 */
-	@Column(name = "buyerphone")
 	private int buyerPhone;
 
 	/**
-	 * Shipping address for the product in the order.
+	 * Shipping address for the order.
 	 */
-	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name = "street1", column = @Column(name = "shippingaddressstreet1")),
-			@AttributeOverride(name = "street2", column = @Column(name = "shippingaddressstreet2")),
-			@AttributeOverride(name = "city", column = @Column(name = "shippingaddresscity")),
-			@AttributeOverride(name = "state", column = @Column(name = "shippingaddressstate")),
-			@AttributeOverride(name = "postalCode", column = @Column(name = "shippingaddresspostalcode")),
-	})
 	private Address shippingAddress;
+
+	/**
+	 * Payer details.
+	 */
+	private Payer payer;
 
 	/**
 	 * Product that is going to be purchased.
 	 */
-	@JoinColumn(name = "product_id")
-	@OneToOne
 	private Product product;
 
 	/**
 	 * User that owns the order.
 	 */
-	@JoinColumn(name = "email")
-	@OneToOne
 	private User user;
 
 	/**
-	 * Public non argument constructor. Required by JPA framework.
+	 * Order constructor,
+	 *
+	 * @param id              Id of the order.
+	 * @param state           Status of the order.
+	 * @param total           Total amount to pay in the order.
+	 * @param date            Date in which the order was placed.
+	 * @param transactionId   Transaction order Id provided by the payment service.
+	 * @param paymentOrderId  Order id provided by the payment service.
+	 * @param units           Units to purchase of the product in the order.
+	 * @param buyerDniNumber  DNI number of the buyer.
+	 * @param buyerPhone      Phone number of the buyer.
+	 * @param shippingAddress Shipping address for the order.
+	 * @param payer           Payer details.
+	 * @param product         Product of the order
+	 * @param user            User who owns the order.
 	 */
-	public Order() {
-		//Do nothing
+	public OrderDto(int id, String state, float total, Date date, String transactionId, String paymentOrderId,
+			int units,
+			int buyerDniNumber, int buyerPhone, Address shippingAddress, Payer payer,
+			Product product, User user) {
+
+		this.id = id;
+		this.state = state;
+		this.total = total;
+		this.date = date;
+		this.transactionId = transactionId;
+		this.paymentOrderId = paymentOrderId;
+		this.units = units;
+		this.buyerDniNumber = buyerDniNumber;
+		this.buyerPhone = buyerPhone;
+		this.shippingAddress = shippingAddress;
+		this.payer = payer;
+		this.product = product;
+		this.user = user;
 	}
 
 	/**
 	 * Constructor of an order.
 	 *
-	 * @param id Id of the order.
-	 * @param state Current state of the order:
-	 * @param total Total amount to pay in the order based on the units of the product.
-	 * @param date Date of the order creation.
-	 * @param transactionId Transaction id given by payment process.
+	 * @param id             Id of the order.
+	 * @param state          Current state of the order:
+	 * @param total          Total amount to pay in the order based on the units of the product.
+	 * @param date           Date of the order creation.
+	 * @param transactionId  Transaction id given by payment process.
 	 * @param paymentOrderId Payment order id given by the payment process.
-	 * @param units Number of the units of the product in the order.
-	 * @param product Product of the order.
-	 * @param user User who owns the order.
+	 * @param units          Number of the units of the product in the order.
+	 * @param product        Product of the order.
+	 * @param user           User who owns the order.
 	 */
-	public Order(int id, String state, float total, Date date, String transactionId,
-				 String paymentOrderId, int units, Product product,
-				 User user) {
+	public OrderDto(int id, String state, float total, Date date, String transactionId,
+			String paymentOrderId, int units, Product product,
+			User user) {
 
 		this.id = id;
 		this.state = state;
@@ -138,9 +149,8 @@ public class Order implements Serializable {
 		this.user = user;
 	}
 
-	public void setUser(User user) {
+	public OrderDto() {
 
-		this.user = user;
 	}
 
 	public int getId() {
@@ -163,14 +173,9 @@ public class Order implements Serializable {
 		this.state = state;
 	}
 
-	public User getUser() {
-
-		return user;
-	}
-
 	public float getTotal() {
 
-		return product.getPrice()*units;
+		return product.getPrice() * units;
 	}
 
 	public void setTotal(float total) {
@@ -218,16 +223,6 @@ public class Order implements Serializable {
 		this.units = units;
 	}
 
-	public Product getProduct() {
-
-		return product;
-	}
-
-	public void setProduct(Product product) {
-
-		this.product = product;
-	}
-
 	public int getBuyerDniNumber() {
 
 		return buyerDniNumber;
@@ -258,9 +253,39 @@ public class Order implements Serializable {
 		this.shippingAddress = shippingAddress;
 	}
 
+	public Payer getPayer() {
+
+		return payer;
+	}
+
+	public void setPayer(Payer payer) {
+
+		this.payer = payer;
+	}
+
+	public Product getProduct() {
+
+		return product;
+	}
+
+	public void setProduct(Product product) {
+
+		this.product = product;
+	}
+
+	public User getUser() {
+
+		return user;
+	}
+
+	public void setUser(User user) {
+
+		this.user = user;
+	}
+
 	@Override public String toString() {
 
-		return "Order{" +
+		return "OrderDto{" +
 				"id=" + id +
 				", state='" + state + '\'' +
 				", total=" + total +
@@ -271,6 +296,7 @@ public class Order implements Serializable {
 				", buyerDniNumber=" + buyerDniNumber +
 				", buyerPhone=" + buyerPhone +
 				", shippingAddress=" + shippingAddress +
+				", payer=" + payer +
 				", product=" + product +
 				", user=" + user +
 				'}';
