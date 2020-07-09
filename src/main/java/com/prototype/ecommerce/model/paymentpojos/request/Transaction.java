@@ -1,5 +1,8 @@
-
-package com.prototype.ecommerce.model.paymentpojos;
+/*
+ * PayU Latam - Copyright (c) 2013 - 2020
+ * http://www.payu.com.co
+ */
+package com.prototype.ecommerce.model.paymentpojos.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -63,16 +66,16 @@ public class Transaction implements Serializable {
     }
 
     /**
-     * @param deviceSessionId
-     * @param cookie
-     * @param ipAddress
-     * @param paymentMethod
-     * @param userAgent
-     * @param creditCard
-     * @param type
-     * @param payer
-     * @param paymentCountry
-     * @param order
+     * @param deviceSessionId Session id.
+     * @param cookie          Cookie.
+     * @param ipAddress       IpAddress.
+     * @param paymentMethod   Payment Method.
+     * @param userAgent       User Agent in which the transaction is being made.
+     * @param creditCard      Credit card info.
+     * @param type            Type of transaction.
+     * @param payer           Payer info.
+     * @param paymentCountry  Payment country.
+     * @param order           Order info.
      */
     public Transaction(Order order, Payer payer, CreditCard creditCard, String type, String paymentMethod,
             String paymentCountry, String deviceSessionId, String ipAddress, String cookie, String userAgent) {

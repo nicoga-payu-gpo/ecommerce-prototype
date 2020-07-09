@@ -1,5 +1,8 @@
-
-package com.prototype.ecommerce.model.paymentpojos;
+/*
+ * PayU Latam - Copyright (c) 2013 - 2020
+ * http://www.payu.com.co
+ */
+package com.prototype.ecommerce.model.paymentpojos.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -55,14 +58,14 @@ public class Order implements Serializable {
     }
 
     /**
-     * @param accountId
-     * @param signature
-     * @param description
-     * @param notifyUrl
-     * @param language
-     * @param referenceCode
-     * @param additionalValues
-     * @param buyer
+     * @param accountId        Account identification number.
+     * @param signature        Signature for the order.
+     * @param description      Order description.
+     * @param notifyUrl        Notification URL.
+     * @param language         Language of order.
+     * @param referenceCode    Reference code.
+     * @param additionalValues Additional values.
+     * @param buyer            Buyer.
      */
     public Order(String accountId, String referenceCode, String description, String language, String signature,
             String notifyUrl, AdditionalValues additionalValues, Buyer buyer) {

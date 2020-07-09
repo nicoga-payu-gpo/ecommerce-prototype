@@ -7,6 +7,7 @@ package com.prototype.ecommerce.restcontrollers;
 import com.prototype.ecommerce.model.Order;
 import com.prototype.ecommerce.model.dtos.OrderDto;
 import com.prototype.ecommerce.services.OrderService;
+import com.prototype.ecommerce.services.PaymentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,13 +30,20 @@ public class OrderController {
 	private final OrderService orderService;
 
 	/**
+	 * Service to provide the payment of an Order.
+	 */
+	private final PaymentService paymentService;
+
+	/**
 	 * The overload constructor method of class.
 	 *
-	 * @param orderService The order service.
+	 * @param orderService   The order service.
+	 * @param paymentService Payment service.
 	 */
-	public OrderController(OrderService orderService) {
+	public OrderController(OrderService orderService, PaymentService paymentService) {
 
 		this.orderService = orderService;
+		this.paymentService = paymentService;
 	}
 
 	/**
@@ -79,19 +87,22 @@ public class OrderController {
 	}
 
 	/**
-	 * Creates a new order in the platform.
+	 * Creates a new order and perform the payment in the platform.
 	 *
 	 * @param order Order to create.
 	 * @return Created order.
 	 */
+	@PreAuthorize("hasRole('ROLE_USER')")
 	@PostMapping
-	public ResponseEntity<Order> createOrderHandler(@RequestBody OrderDto order) {
+	public ResponseEntity<Order> createAndPayOrderHandler(@RequestBody OrderDto order) {
 
 		try {
-
-			return new ResponseEntity<>(orderService.createOrder(order), HttpStatus.ACCEPTED);
+			Order entity = orderService.createOrder(order);
+			order.setId(entity.getId());
+			entity = paymentService.doPayment(order);
+			return new ResponseEntity<>(orderService.updateOrder(entity), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 

@@ -1,9 +1,14 @@
+/*
+ * PayU Latam - Copyright (c) 2013 - 2020
+ * http://www.payu.com.co
+ */
 package com.prototype.ecommerce.model;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 @Embeddable
-public class Address {
+public class Address implements Serializable {
 
 	private String street1;
 

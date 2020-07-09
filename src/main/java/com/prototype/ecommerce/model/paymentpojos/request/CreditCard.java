@@ -1,5 +1,8 @@
-
-package com.prototype.ecommerce.model.paymentpojos;
+/*
+ * PayU Latam - Copyright (c) 2013 - 2020
+ * http://www.payu.com.co
+ */
+package com.prototype.ecommerce.model.paymentpojos.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,7 +20,7 @@ import java.io.Serializable;
 })
 public class CreditCard implements Serializable {
 
-    private final static long serialVersionUID = 6898575016572678948L;
+    private static final long serialVersionUID = 6898575016572678948L;
 
     @JsonProperty("number")
     private String number;
@@ -39,10 +42,10 @@ public class CreditCard implements Serializable {
     }
 
     /**
-     * @param number
-     * @param name
-     * @param securityCode
-     * @param expirationDate
+     * @param number         Number of credit card.
+     * @param name           Holder name of the credit card.
+     * @param securityCode   Security code of the credit card.
+     * @param expirationDate Expiration date of the credit card.
      */
     public CreditCard(String number, String securityCode, String expirationDate, String name) {
 

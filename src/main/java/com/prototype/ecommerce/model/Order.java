@@ -67,25 +67,25 @@ public class Order implements Serializable {
 	/**
 	 * Dni number of the buyer.
 	 */
-	@Column(name = "buyerdninumber")
-	private int buyerDniNumber;
+	@Column(name = "buyer_dni_number")
+	private String buyerDniNumber;
 
 	/**
 	 * Buyer phone number.
 	 */
-	@Column(name = "buyerphone")
-	private int buyerPhone;
+	@Column(name = "buyer_phone")
+	private String buyerPhone;
 
 	/**
 	 * Shipping address for the product in the order.
 	 */
 	@Embedded
 	@AttributeOverrides({
-			@AttributeOverride(name = "street1", column = @Column(name = "shippingaddressstreet1")),
-			@AttributeOverride(name = "street2", column = @Column(name = "shippingaddressstreet2")),
-			@AttributeOverride(name = "city", column = @Column(name = "shippingaddresscity")),
-			@AttributeOverride(name = "state", column = @Column(name = "shippingaddressstate")),
-			@AttributeOverride(name = "postalCode", column = @Column(name = "shippingaddresspostalcode")),
+			@AttributeOverride(name = "street1", column = @Column(name = "buyer_shipping_address_street1")),
+			@AttributeOverride(name = "street2", column = @Column(name = "buyer_shipping_address_street2")),
+			@AttributeOverride(name = "city", column = @Column(name = "buyer_shipping_address_city")),
+			@AttributeOverride(name = "state", column = @Column(name = "buyer_shipping_address_state")),
+			@AttributeOverride(name = "postalCode", column = @Column(name = "buyer_shipping_address_postal_code")),
 	})
 	private Address shippingAddress;
 
@@ -122,10 +122,13 @@ public class Order implements Serializable {
 	 * @param units Number of the units of the product in the order.
 	 * @param product Product of the order.
 	 * @param user User who owns the order.
+	 * @param buyerDniNumber Number of the user dni.
+	 * @param buyerPhone Phone number of the buyer.
+	 * @param shippingAddress Shipping address for the order.
 	 */
 	public Order(int id, String state, float total, Date date, String transactionId,
-				 String paymentOrderId, int units, Product product,
-				 User user) {
+			String paymentOrderId, int units, Product product,
+			User user, String buyerDniNumber, String buyerPhone, Address shippingAddress) {
 
 		this.id = id;
 		this.state = state;
@@ -136,6 +139,9 @@ public class Order implements Serializable {
 		this.units = units;
 		this.product = product;
 		this.user = user;
+		this.buyerDniNumber = buyerDniNumber;
+		this.buyerPhone = buyerPhone;
+		this.shippingAddress = shippingAddress;
 	}
 
 	public void setUser(User user) {
@@ -228,22 +234,22 @@ public class Order implements Serializable {
 		this.product = product;
 	}
 
-	public int getBuyerDniNumber() {
+	public String getBuyerDniNumber() {
 
 		return buyerDniNumber;
 	}
 
-	public void setBuyerDniNumber(int buyerDniNumber) {
+	public void setBuyerDniNumber(String buyerDniNumber) {
 
 		this.buyerDniNumber = buyerDniNumber;
 	}
 
-	public int getBuyerPhone() {
+	public String getBuyerPhone() {
 
 		return buyerPhone;
 	}
 
-	public void setBuyerPhone(int buyerPhone) {
+	public void setBuyerPhone(String buyerPhone) {
 
 		this.buyerPhone = buyerPhone;
 	}

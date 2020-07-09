@@ -6,7 +6,6 @@ package com.prototype.ecommerce.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.logging.Logger;
 
 /**
  * Util that generate the MD5 hash of an String
@@ -24,6 +23,7 @@ public class StringUtils {
 	 * @return MD5 hash of the string.
 	 */
 	public static String getMD5Hash(String string) {
+
 		try {
 			MessageDigest messageDigest = MessageDigest.getInstance("MD5");
 			messageDigest.update(string.getBytes());
@@ -42,11 +42,12 @@ public class StringUtils {
 	/**
 	 * Validate if a password corresponds to its MD5 hash.
 	 *
-	 * @param password Password to validate.
+	 * @param password     Password to validate.
 	 * @param passwordHash MD5 hash of the real password.
 	 * @return If the passwords are the same.
 	 */
 	public static boolean isPasswordValid(String password, String passwordHash) {
+
 		return getMD5Hash(password).equals(passwordHash);
 	}
 }

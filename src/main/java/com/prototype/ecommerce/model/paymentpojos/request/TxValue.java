@@ -1,5 +1,8 @@
-
-package com.prototype.ecommerce.model.paymentpojos;
+/*
+ * PayU Latam - Copyright (c) 2013 - 2020
+ * http://www.payu.com.co
+ */
+package com.prototype.ecommerce.model.paymentpojos.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -31,8 +34,8 @@ public class TxValue implements Serializable {
     }
 
     /**
-     * @param currency
-     * @param value
+     * @param currency Type of currency of the value.
+     * @param value    Value of the transaction.
      */
     public TxValue(float value, String currency) {
 

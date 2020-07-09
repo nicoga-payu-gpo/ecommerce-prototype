@@ -4,6 +4,7 @@
  */
 package com.prototype.ecommerce.services;
 
+import com.prototype.ecommerce.model.Address;
 import com.prototype.ecommerce.model.Order;
 import com.prototype.ecommerce.model.Product;
 import com.prototype.ecommerce.model.User;
@@ -61,7 +62,9 @@ class OrderServiceImplTest {
 		Product p = new Product(1, "PRODUCT1", "Product desc", 100, 15000);
 		o = new Order(2, "APROVED", 150000, new Date(),
 				"ghjkkj", "klhjk",
-				10, p, new User("Nicolas", "HJGUJ", "nicoga97@gmail.com", "ROLE_ADMIN"));
+				10, p, new User("Nicolas", "HJGUJ", "nicoga97@gmail.com", "ROLE_ADMIN"),
+				"34235432", "345345",
+				new Address("EWRDWE", "PTO301", "BOGOTA", "BOGOTADC", 4565));
 	}
 
 	/**

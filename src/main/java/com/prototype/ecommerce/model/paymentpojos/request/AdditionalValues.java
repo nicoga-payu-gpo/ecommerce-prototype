@@ -1,5 +1,8 @@
-
-package com.prototype.ecommerce.model.paymentpojos;
+/*
+ * PayU Latam - Copyright (c) 2013 - 2020
+ * http://www.payu.com.co
+ */
+package com.prototype.ecommerce.model.paymentpojos.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -35,16 +38,16 @@ public class AdditionalValues implements Serializable {
     }
 
     /**
-     * @param tXVALUE
-     * @param tXTAX
-     * @param tXTAXRETURNBASE
+     * @param txValue         Transaction value.
+     * @param txTax           Tax value of the transaction.
+     * @param txTaxReturnBase Transaction tax return base.
      */
-    public AdditionalValues(TxValue tXVALUE, TxValue tXTAX, TxValue tXTAXRETURNBASE) {
+    public AdditionalValues(TxValue txValue, TxValue txTax, TxValue txTaxReturnBase) {
 
         super();
-        this.txValue = tXVALUE;
-        this.txTax = tXTAX;
-        this.txTaxReturnBase = tXTAXRETURNBASE;
+        this.txValue = txValue;
+        this.txTax = txTax;
+        this.txTaxReturnBase = txTaxReturnBase;
     }
 
     @JsonProperty("TX_VALUE")

@@ -1,7 +1,10 @@
 package com.prototype.ecommerce.services.adapters;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.prototype.ecommerce.model.dtos.OrderDto;
-import com.prototype.ecommerce.model.paymentpojos.*;
+import com.prototype.ecommerce.model.paymentpojos.request.*;
+import com.prototype.ecommerce.model.paymentpojos.response.PaymentResponsePayu;
 import com.prototype.ecommerce.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +19,7 @@ public class PayuAdapter implements PaymentAdapter {
 
 	private static final String MERCHANT_ID = "508029";
 
-	@Override public Payment createPaymentRequest(OrderDto data) {
+	@Override public PaymentPayU createPaymentRequest(OrderDto data) {
 
 		Address billingAddress = new Address(data.getPayer().getBillingAddress().getStreet1(),
 				data.getPayer().getBillingAddress().getStreet2(), data.getPayer().getBillingAddress().getState(),
@@ -24,7 +27,7 @@ public class PayuAdapter implements PaymentAdapter {
 				String.valueOf(data.getPayer().getBillingAddress().getPostalCode()),
 				String.valueOf(data.getPayer().getPhone()));
 		Payer payer = new Payer(data.getPayer().getEmail(), data.getPayer().getName(), data.getPayer().getEmail(),
-				String.valueOf(data.getPayer().getPhone()), String.valueOf(data.getPayer().getDniNumber()),
+				data.getPayer().getPhone(), data.getPayer().getDniNumber(),
 				billingAddress);
 		Address shippingAddress = new Address(data.getShippingAddress().getStreet1(),
 				data.getShippingAddress().getStreet2(), data.getShippingAddress().getState(),
@@ -44,8 +47,15 @@ public class PayuAdapter implements PaymentAdapter {
 				data.getPayer().getCardFranchise(), "CO", "127.0.0.1", "127.0.0.1", "DFAS",
 				"Mozilla/5.0 (Windows NT 5.1; rv:18.0) Gecko/20100101 Firefox/18.0");
 
-		return new Payment("es", "SUBMIT_TRANSACTION", new Merchant(API_KEY, API_LOGIN), transaction,
+		return new PaymentPayU("es", "SUBMIT_TRANSACTION", new Merchant(API_KEY, API_LOGIN), transaction,
 				true);
+	}
+
+	@Override public PaymentResponsePayu adaptPaymentResponse(String response) throws JsonProcessingException {
+
+		XmlMapper xmlMapper = new XmlMapper();
+
+		return xmlMapper.readValue(response, PaymentResponsePayu.class);
 	}
 
 }

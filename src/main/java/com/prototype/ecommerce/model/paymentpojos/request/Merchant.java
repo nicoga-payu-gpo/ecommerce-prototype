@@ -1,5 +1,8 @@
-
-package com.prototype.ecommerce.model.paymentpojos;
+/*
+ * PayU Latam - Copyright (c) 2013 - 2020
+ * http://www.payu.com.co
+ */
+package com.prototype.ecommerce.model.paymentpojos.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,7 +18,7 @@ import java.io.Serializable;
 })
 public class Merchant implements Serializable {
 
-    private final static long serialVersionUID = 3105455040544444377L;
+    private static final long serialVersionUID = 3105455040544444377L;
 
     @JsonProperty("apiKey")
     private String apiKey;
@@ -31,8 +34,8 @@ public class Merchant implements Serializable {
     }
 
     /**
-     * @param apiKey
-     * @param apiLogin
+     * @param apiKey   API key for for identification in payment provider.
+     * @param apiLogin APi login for the payment provider.
      */
     public Merchant(String apiKey, String apiLogin) {
 

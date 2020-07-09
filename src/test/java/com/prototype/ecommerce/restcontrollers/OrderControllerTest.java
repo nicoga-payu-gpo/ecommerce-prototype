@@ -4,6 +4,7 @@
  */
 package com.prototype.ecommerce.restcontrollers;
 
+import com.prototype.ecommerce.model.Address;
 import com.prototype.ecommerce.model.Order;
 import com.prototype.ecommerce.model.Product;
 import com.prototype.ecommerce.model.User;
@@ -61,10 +62,11 @@ class OrderControllerTest {
 		User u = new User("Nicolas", "HJGUJ", "nicoga97@gmail.com", "ROLE_ADMIN");
 		User u2 = new User("Camilo", "HJGUJfdg", "camilo@gmail.com", "ROLE_ADMIN");
 		Order order1 = new Order(1, "APROVED", 150000, new Date(),
-				"ghjkkj", "klhjk", 10, p, u2);
+				"ghjkkj", "klhjk", 10, p, u2, "34235432", "345345",
+				new Address("EWRDWE", "PTO301", "BOGOTA", "BOGOTADC", 455));
 		Order order2 = new Order(2, "PENDING", 15000, new Date(),
-				"ghjkHkj", "klHJJhjk", 1, p,
-				u);
+				"ghjkHkj", "klHJJhjk", 1, p, u, "34235432", "345345",
+				new Address("EWRDWE", "PTO301", "BOGOTA", "BOGOTADC", 4565));
 		orders = new ArrayList<>();
 		orders.add(order1);
 		orders.add(order2);
@@ -98,7 +100,7 @@ class OrderControllerTest {
 	}
 
 	/**
-	 * Test the {@linkplain OrderController#createOrderHandler(OrderDto)} } method.
+	 * Test the {@linkplain OrderController#createAndPayOrderHandler(OrderDto)} } method.
 	 *
 	 * @author Nicolas Garcia Rey (nicolas.garcia@payulatam.com)
 	 * @date 25/06/2020

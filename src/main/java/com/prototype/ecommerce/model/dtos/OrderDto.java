@@ -57,12 +57,12 @@ public class OrderDto {
 	/**
 	 * Buyer DNI number.
 	 */
-	private int buyerDniNumber;
+	private String buyerDniNumber;
 
 	/**
 	 * Buyer phone number,
 	 */
-	private int buyerPhone;
+	private String buyerPhone;
 
 	/**
 	 * Shipping address for the order.
@@ -103,7 +103,7 @@ public class OrderDto {
 	 */
 	public OrderDto(int id, String state, float total, Date date, String transactionId, String paymentOrderId,
 			int units,
-			int buyerDniNumber, int buyerPhone, Address shippingAddress, Payer payer,
+			String buyerDniNumber, String buyerPhone, Address shippingAddress, Payer payer,
 			Product product, User user) {
 
 		this.id = id;
@@ -223,22 +223,22 @@ public class OrderDto {
 		this.units = units;
 	}
 
-	public int getBuyerDniNumber() {
+	public String getBuyerDniNumber() {
 
 		return buyerDniNumber;
 	}
 
-	public void setBuyerDniNumber(int buyerDniNumber) {
+	public void setBuyerDniNumber(String buyerDniNumber) {
 
 		this.buyerDniNumber = buyerDniNumber;
 	}
 
-	public int getBuyerPhone() {
+	public String getBuyerPhone() {
 
 		return buyerPhone;
 	}
 
-	public void setBuyerPhone(int buyerPhone) {
+	public void setBuyerPhone(String buyerPhone) {
 
 		this.buyerPhone = buyerPhone;
 	}

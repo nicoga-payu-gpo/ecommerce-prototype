@@ -5,6 +5,7 @@
 package com.prototype.ecommerce.services;
 
 import com.prototype.ecommerce.model.Order;
+import com.prototype.ecommerce.model.dtos.OrderDto;
 
 /**
  * Service that exposes functionalities to manipulate  payment in {@linkplain Order} entities
@@ -15,5 +16,6 @@ import com.prototype.ecommerce.model.Order;
  */
 public interface PaymentService {
 
+	Order doPayment(OrderDto order);
 
 }

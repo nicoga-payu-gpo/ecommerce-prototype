@@ -1,5 +1,8 @@
-
-package com.prototype.ecommerce.model.paymentpojos;
+/*
+ * PayU Latam - Copyright (c) 2013 - 2020
+ * http://www.payu.com.co
+ */
+package com.prototype.ecommerce.model.paymentpojos.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -51,13 +54,13 @@ public class Address implements Serializable {
     }
 
     /**
-     * @param country
-     * @param city
-     * @param phone
-     * @param postalCode
-     * @param street1
-     * @param street2
-     * @param state
+     * @param country    Country of the address.
+     * @param city       City.
+     * @param phone      Phone number.
+     * @param postalCode Postal code.
+     * @param street1    Street.
+     * @param street2    Street additional details,
+     * @param state      State.
      */
     public Address(String street1, String street2, String city, String state, String country, String postalCode,
             String phone) {

@@ -1,5 +1,8 @@
-
-package com.prototype.ecommerce.model.paymentpojos;
+/*
+ * PayU Latam - Copyright (c) 2013 - 2020
+ * http://www.payu.com.co
+ */
+package com.prototype.ecommerce.model.paymentpojos.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,6 +11,13 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.Serializable;
 
+/**
+ * POJO request in order to process the payment with PayU.
+ *
+ * @author Nicolas Garcia (nicolas.garcia@payulatam.com)
+ * @version 1.0
+ * @since 1.0
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "language",
@@ -16,7 +26,7 @@ import java.io.Serializable;
         "transaction",
         "test"
 })
-public class Payment implements Serializable {
+public class PaymentPayU implements Serializable, Payment {
 
     private static final long serialVersionUID = 2642396999832998338L;
 
@@ -38,18 +48,20 @@ public class Payment implements Serializable {
     /**
      * No args constructor for use in serialization
      */
-    public Payment() {
+    public PaymentPayU() {
 
     }
 
     /**
-     * @param test
-     * @param merchant
-     * @param language
-     * @param command
-     * @param transaction
+     * POJO constructor.
+     *
+     * @param test        Indicates if the request is a test.
+     * @param merchant    Merchant info.
+     * @param language    Language of the request.
+     * @param command     Type of transaction.
+     * @param transaction Transaction information.
      */
-    public Payment(String language, String command, Merchant merchant, Transaction transaction, Boolean test) {
+    public PaymentPayU(String language, String command, Merchant merchant, Transaction transaction, Boolean test) {
 
         super();
         this.language = language;

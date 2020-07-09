@@ -1,5 +1,8 @@
-
-package com.prototype.ecommerce.model.paymentpojos;
+/*
+ * PayU Latam - Copyright (c) 2013 - 2020
+ * http://www.payu.com.co
+ */
+package com.prototype.ecommerce.model.paymentpojos.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,19 +13,19 @@ import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "merchantBuyerId",
+        "merchantPayerId",
         "fullName",
         "emailAddress",
         "contactPhone",
         "dniNumber",
-        "shippingAddress"
+        "billingAddress"
 })
-public class Buyer implements Serializable {
+public class Payer implements Serializable {
 
-    private static final long serialVersionUID = 1369164545871014928L;
+    private static final long serialVersionUID = 6332477753309782174L;
 
-    @JsonProperty("merchantBuyerId")
-    private String merchantBuyerId;
+    @JsonProperty("merchantPayerId")
+    private String merchantPayerId;
 
     @JsonProperty("fullName")
     private String fullName;
@@ -36,46 +39,46 @@ public class Buyer implements Serializable {
     @JsonProperty("dniNumber")
     private String dniNumber;
 
-    @JsonProperty("shippingAddress")
-    private Address shippingAddress;
+    @JsonProperty("billingAddress")
+    private Address billingAddress;
 
     /**
      * No args constructor for use in serialization
      */
-    public Buyer() {
+    public Payer() {
 
     }
 
     /**
-     * @param dniNumber
-     * @param emailAddress
-     * @param merchantBuyerId
-     * @param fullName
-     * @param shippingAddress
-     * @param contactPhone
+     * @param dniNumber       DNI number of the payer.
+     * @param emailAddress    email of the payer.
+     * @param fullName        Full name of the payer.
+     * @param billingAddress  Billing address of the payer.
+     * @param contactPhone    Phone number of the payer.
+     * @param merchantPayerId Identification number in the system for the payer.
      */
-    public Buyer(String merchantBuyerId, String fullName, String emailAddress, String contactPhone, String dniNumber,
-            Address shippingAddress) {
+    public Payer(String merchantPayerId, String fullName, String emailAddress, String contactPhone, String dniNumber,
+            Address billingAddress) {
 
         super();
-        this.merchantBuyerId = merchantBuyerId;
+        this.merchantPayerId = merchantPayerId;
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.contactPhone = contactPhone;
         this.dniNumber = dniNumber;
-        this.shippingAddress = shippingAddress;
+        this.billingAddress = billingAddress;
     }
 
-    @JsonProperty("merchantBuyerId")
-    public String getMerchantBuyerId() {
+    @JsonProperty("merchantPayerId")
+    public String getMerchantPayerId() {
 
-        return merchantBuyerId;
+        return merchantPayerId;
     }
 
-    @JsonProperty("merchantBuyerId")
-    public void setMerchantBuyerId(String merchantBuyerId) {
+    @JsonProperty("merchantPayerId")
+    public void setMerchantPayerId(String merchantPayerId) {
 
-        this.merchantBuyerId = merchantBuyerId;
+        this.merchantPayerId = merchantPayerId;
     }
 
     @JsonProperty("fullName")
@@ -126,24 +129,24 @@ public class Buyer implements Serializable {
         this.dniNumber = dniNumber;
     }
 
-    @JsonProperty("shippingAddress")
-    public Address getShippingAddress() {
+    @JsonProperty("billingAddress")
+    public Address getBillingAddress() {
 
-        return shippingAddress;
+        return billingAddress;
     }
 
-    @JsonProperty("shippingAddress")
-    public void setShippingAddress(Address shippingAddress) {
+    @JsonProperty("billingAddress")
+    public void setBillingAddress(Address billingAddress) {
 
-        this.shippingAddress = shippingAddress;
+        this.billingAddress = billingAddress;
     }
 
     @Override
     public String toString() {
 
-        return new ToStringBuilder(this).append("merchantBuyerId", merchantBuyerId).append("fullName", fullName)
+        return new ToStringBuilder(this).append("merchantPayerId", merchantPayerId).append("fullName", fullName)
                 .append("emailAddress", emailAddress).append("contactPhone", contactPhone)
-                .append("dniNumber", dniNumber).append("shippingAddress", shippingAddress).toString();
+                .append("dniNumber", dniNumber).append("billingAddress", billingAddress).toString();
     }
 
 }
