@@ -7,8 +7,6 @@ package com.prototype.ecommerce.services;
 import com.prototype.ecommerce.model.Order;
 import com.prototype.ecommerce.model.dtos.OrderDto;
 
-import java.util.Collection;
-
 /**
  * Service that exposes functionalities to manipulate {@linkplain Order} entities
  *
@@ -34,12 +32,12 @@ public interface OrderService {
 	Iterable<Order> getOrders();
 
 	/**
-	 * Return all the orders for the given user email.
+	 * Return  the orders for the given Id.
 	 *
-	 * @param email User email to query.
-	 * @return The orders placed with the given user email.
+	 * @param id order Id to query.
+	 * @return The order placed with the given id.
 	 */
-	Collection<Order> getOrdersByUser(String email);
+	Order getOrdersById(String id);
 
 	/**
 	 * Update an existing order.

@@ -4,7 +4,7 @@
  */
 package com.prototype.ecommerce.restClient;
 
-import com.prototype.ecommerce.model.paymentpojos.request.Payment;
+import com.prototype.ecommerce.model.paymentpojos.Request;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface PaymentClient {
 
 	@PostMapping(consumes = "application/json")
-	String doPayment(@RequestBody Payment request);
+	String doPayment(@RequestBody Request request);
+
+	@PostMapping(consumes = "application/json")
+	String doRefund(@RequestBody Request refundRequest);
 }
 

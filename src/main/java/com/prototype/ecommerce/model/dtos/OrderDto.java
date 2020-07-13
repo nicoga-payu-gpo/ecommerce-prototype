@@ -65,6 +65,11 @@ public class OrderDto {
 	private String buyerPhone;
 
 	/**
+	 * Buyer name
+	 */
+	private String buyerName;
+
+	/**
 	 * Shipping address for the order.
 	 */
 	private Address shippingAddress;
@@ -98,11 +103,12 @@ public class OrderDto {
 	 * @param buyerPhone      Phone number of the buyer.
 	 * @param shippingAddress Shipping address for the order.
 	 * @param payer           Payer details.
+	 * @param buyerName       Buyer name.
 	 * @param product         Product of the order
 	 * @param user            User who owns the order.
 	 */
 	public OrderDto(int id, String state, float total, Date date, String transactionId, String paymentOrderId,
-			int units,
+			int units, String buyerName,
 			String buyerDniNumber, String buyerPhone, Address shippingAddress, Payer payer,
 			Product product, User user) {
 
@@ -110,6 +116,7 @@ public class OrderDto {
 		this.state = state;
 		this.total = total;
 		this.date = date;
+		this.buyerName = buyerName;
 		this.transactionId = transactionId;
 		this.paymentOrderId = paymentOrderId;
 		this.units = units;
@@ -211,6 +218,16 @@ public class OrderDto {
 	public void setPaymentOrderId(String paymentOrderId) {
 
 		this.paymentOrderId = paymentOrderId;
+	}
+
+	public String getBuyerName() {
+
+		return buyerName;
+	}
+
+	public void setBuyerName(String buyerName) {
+
+		this.buyerName = buyerName;
 	}
 
 	public int getUnits() {

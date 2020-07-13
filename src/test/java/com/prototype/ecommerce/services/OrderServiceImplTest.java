@@ -96,19 +96,6 @@ class OrderServiceImplTest {
 		Assert.assertEquals(orders, orderService.getOrders());
 	}
 
-	/**
-	 * Test the {@linkplain OrderServiceImpl#getOrdersByUser(String)}  method.
-	 *
-	 * @author Nicolas Garcia Rey (nicolas.garcia@payulatam.com)
-	 * @date 25/06/2020
-	 */
-	@Test
-	void getOrdersByUserTest() {
-
-		User u = new User(null, null, "nicoga97@gmail.com", null);
-		when(orderRepository.getOrdersByUser(u)).thenReturn(Collections.singletonList(o));
-		Assert.assertEquals(Collections.singletonList(o), orderRepository.getOrdersByUser(u));
-	}
 
 	/**
 	 * Test the {@linkplain OrderServiceImpl#updateOrder(Order)} method.

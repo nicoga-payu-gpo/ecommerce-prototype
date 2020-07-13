@@ -5,9 +5,11 @@
 package com.prototype.ecommerce.restcontrollers;
 
 import com.prototype.ecommerce.model.Order;
+import com.prototype.ecommerce.model.Product;
 import com.prototype.ecommerce.model.dtos.OrderDto;
 import com.prototype.ecommerce.services.OrderService;
 import com.prototype.ecommerce.services.PaymentService;
+import com.prototype.ecommerce.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,15 +37,23 @@ public class OrderController {
 	private final PaymentService paymentService;
 
 	/**
+	 * Service for entity {@linkplain Product}
+	 */
+	private final ProductService productService;
+
+	/**
 	 * The overload constructor method of class.
 	 *
 	 * @param orderService   The order service.
 	 * @param paymentService Payment service.
+	 * @param productService
 	 */
-	public OrderController(OrderService orderService, PaymentService paymentService) {
+	public OrderController(OrderService orderService, PaymentService paymentService,
+			ProductService productService) {
 
 		this.orderService = orderService;
 		this.paymentService = paymentService;
+		this.productService = productService;
 	}
 
 	/**
@@ -69,19 +79,20 @@ public class OrderController {
 	}
 
 	/**
-	 * Return all the orders placed in the platform by an specific user.
+	 * Makes a refund of an order.
 	 *
-	 * @param email User email.
-	 * @return All the order placed by the user with the given email.
+	 * @param orderId Id of the order to refund.
+	 * @return Updated order.
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("/{userId}")
-	public ResponseEntity<Iterable<Order>> getOrdersByUserId(@PathVariable("userId") String email) {
+	@PostMapping(value = "/refund", consumes = "text/plain")
+	public ResponseEntity<Order> doRefundHandler(@RequestBody String orderId) {
+
 		try {
-
-			return new ResponseEntity<>(orderService.getOrdersByUser(email), HttpStatus.ACCEPTED);
+			Order order = orderService.getOrdersById(orderId);
+			return new ResponseEntity<>(paymentService.doRefund(order), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
-
+			ex.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
@@ -100,6 +111,11 @@ public class OrderController {
 			Order entity = orderService.createOrder(order);
 			order.setId(entity.getId());
 			entity = paymentService.doPayment(order);
+			if (entity.getState().equals("APPROVED")) {
+				Product product = entity.getProduct();
+				product.setAvailableUnits(product.getAvailableUnits() - 1);
+				productService.updateProduct(product);
+			}
 			return new ResponseEntity<>(orderService.updateOrder(entity), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

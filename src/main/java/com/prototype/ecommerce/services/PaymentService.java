@@ -18,4 +18,6 @@ public interface PaymentService {
 
 	Order doPayment(OrderDto order);
 
+	Order doRefund(Order order);
+
 }

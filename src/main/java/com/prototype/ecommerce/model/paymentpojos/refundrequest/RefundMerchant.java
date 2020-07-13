@@ -1,8 +1,5 @@
-/*
- * PayU Latam - Copyright (c) 2013 - 2020
- * http://www.payu.com.co
- */
-package com.prototype.ecommerce.model.paymentpojos.request;
+
+package com.prototype.ecommerce.model.paymentpojos.refundrequest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,9 +13,9 @@ import java.io.Serializable;
         "apiKey",
         "apiLogin"
 })
-public class Merchant implements Serializable {
+public class RefundMerchant implements Serializable {
 
-    private static final long serialVersionUID = 3105455040544444377L;
+    private final static long serialVersionUID = 1922099477006501024L;
 
     @JsonProperty("apiKey")
     private String apiKey;
@@ -29,15 +26,15 @@ public class Merchant implements Serializable {
     /**
      * No args constructor for use in serialization
      */
-    public Merchant() {
+    public RefundMerchant() {
 
     }
 
     /**
-     * @param apiKey   API key for for identification in payment provider.
-     * @param apiLogin APi login for the payment provider.
+     * @param apiKey
+     * @param apiLogin
      */
-    public Merchant(String apiKey, String apiLogin) {
+    public RefundMerchant(String apiKey, String apiLogin) {
 
         super();
         this.apiKey = apiKey;

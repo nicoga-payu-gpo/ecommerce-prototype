@@ -3,7 +3,10 @@ package com.prototype.ecommerce.services.adapters;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.prototype.ecommerce.model.dtos.OrderDto;
-import com.prototype.ecommerce.model.paymentpojos.request.*;
+import com.prototype.ecommerce.model.paymentpojos.paymentrequest.*;
+import com.prototype.ecommerce.model.paymentpojos.refundrequest.RefundMerchant;
+import com.prototype.ecommerce.model.paymentpojos.refundrequest.RefundOrder;
+import com.prototype.ecommerce.model.paymentpojos.refundrequest.RefundRequestPayu;
 import com.prototype.ecommerce.model.paymentpojos.response.PaymentResponsePayu;
 import com.prototype.ecommerce.utils.StringUtils;
 import org.springframework.stereotype.Service;
@@ -33,7 +36,7 @@ public class PayuAdapter implements PaymentAdapter {
 				data.getShippingAddress().getStreet2(), data.getShippingAddress().getState(),
 				data.getShippingAddress().getCity(), "CO", String.valueOf(data.getShippingAddress().getPostalCode()),
 				String.valueOf(data.getBuyerPhone()));
-		Buyer buyer = new Buyer(data.getUser().getEmail(), data.getUser().getFullName(), data.getUser().getEmail(),
+		Buyer buyer = new Buyer(data.getUser().getEmail(), data.getBuyerName(), data.getUser().getEmail(),
 				String.valueOf(data.getBuyerPhone()), String.valueOf(data.getBuyerDniNumber()), shippingAddress);
 		AdditionalValues additionalValues = new AdditionalValues(new TxValue(data.getTotal(), "COP"),
 				new TxValue(0, "COP"), new TxValue(0, "COP"));
@@ -54,8 +57,17 @@ public class PayuAdapter implements PaymentAdapter {
 	@Override public PaymentResponsePayu adaptPaymentResponse(String response) throws JsonProcessingException {
 
 		XmlMapper xmlMapper = new XmlMapper();
-
+		System.out.println(response);
 		return xmlMapper.readValue(response, PaymentResponsePayu.class);
+	}
+
+	@Override public RefundRequestPayu createRefundRequest(com.prototype.ecommerce.model.Order order) {
+
+		RefundMerchant refundMerchant = new RefundMerchant(API_KEY, API_LOGIN);
+		com.prototype.ecommerce.model.paymentpojos.refundrequest.Transaction transaction = new com.prototype.ecommerce.model.paymentpojos.refundrequest.Transaction(
+				new RefundOrder(order.getPaymentOrderId().trim()),
+				"REFUND", "CLIENT REQUEST", order.getTransactionId().trim());
+		return new RefundRequestPayu("es", "SUBMIT_TRANSACTION", refundMerchant, transaction, true);
 	}
 
 }

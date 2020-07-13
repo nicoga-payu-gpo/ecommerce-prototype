@@ -2,7 +2,7 @@
  * PayU Latam - Copyright (c) 2013 - 2020
  * http://www.payu.com.co
  */
-package com.prototype.ecommerce.model.paymentpojos.request;
+package com.prototype.ecommerce.model.paymentpojos.paymentrequest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -41,24 +41,26 @@ public class Order implements Serializable {
     @JsonProperty("signature")
     private String signature;
 
-    @JsonProperty("notifyUrl")
-    private String notifyUrl;
+	@JsonProperty("notifyUrl")
+	private String notifyUrl;
 
-    @JsonProperty("additionalValues")
-    private AdditionalValues additionalValues;
+	@JsonProperty("additionalValues")
+	private AdditionalValues additionalValues;
 
-    @JsonProperty("buyer")
-    private Buyer buyer;
+	@JsonProperty("buyer")
+	private Buyer buyer;
 
-    /**
-     * No args constructor for use in serialization
-     */
-    public Order() {
+	private String id;
 
-    }
+	/**
+	 * No args constructor for use in serialization
+	 */
+	public Order() {
 
-    /**
-     * @param accountId        Account identification number.
+	}
+
+	/**
+	 * @param accountId        Account identification number.
      * @param signature        Signature for the order.
      * @param description      Order description.
      * @param notifyUrl        Notification URL.
@@ -168,22 +170,32 @@ public class Order implements Serializable {
     @JsonProperty("buyer")
     public Buyer getBuyer() {
 
-        return buyer;
-    }
+		return buyer;
+	}
 
-    @JsonProperty("buyer")
-    public void setBuyer(Buyer buyer) {
+	@JsonProperty("buyer")
+	public void setBuyer(Buyer buyer) {
 
-        this.buyer = buyer;
-    }
+		this.buyer = buyer;
+	}
 
-    @Override
-    public String toString() {
+	public String getId() {
 
-        return new ToStringBuilder(this).append("accountId", accountId).append("referenceCode", referenceCode)
-                .append("description", description).append("language", language).append("signature", signature)
-                .append("notifyUrl", notifyUrl).append("additionalValues", additionalValues).append("buyer", buyer)
-                .toString();
-    }
+		return id;
+	}
+
+	public void setId(String id) {
+
+		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+
+		return new ToStringBuilder(this).append("accountId", accountId).append("referenceCode", referenceCode)
+				.append("description", description).append("language", language).append("signature", signature)
+				.append("notifyUrl", notifyUrl).append("additionalValues", additionalValues).append("buyer", buyer)
+				.toString();
+	}
 
 }

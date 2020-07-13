@@ -2,7 +2,7 @@
  * PayU Latam - Copyright (c) 2013 - 2020
  * http://www.payu.com.co
  */
-package com.prototype.ecommerce.model.paymentpojos.request;
+package com.prototype.ecommerce.model.paymentpojos.paymentrequest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -58,7 +58,7 @@ public class Transaction implements Serializable {
     @JsonProperty("userAgent")
     private String userAgent;
 
-    /**
+	/**
      * No args constructor for use in serialization
      */
     public Transaction() {

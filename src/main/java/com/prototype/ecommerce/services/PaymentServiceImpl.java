@@ -3,7 +3,7 @@ package com.prototype.ecommerce.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.prototype.ecommerce.model.Order;
 import com.prototype.ecommerce.model.dtos.OrderDto;
-import com.prototype.ecommerce.model.paymentpojos.request.Payment;
+import com.prototype.ecommerce.model.paymentpojos.Request;
 import com.prototype.ecommerce.model.paymentpojos.response.PaymentResponsePayu;
 import com.prototype.ecommerce.restClient.PaymentClient;
 import com.prototype.ecommerce.services.adapters.PaymentAdapter;
@@ -35,7 +35,7 @@ public class PaymentServiceImpl implements PaymentService {
 				order.getTransactionId(), order.getPaymentOrderId(), order.getUnits(), order.getProduct(),
 				order.getUser(), order.getBuyerDniNumber(), order.getBuyerPhone(), order.getShippingAddress());
 
-		Payment requestBody = paymentAdapter.createPaymentRequest(order);
+		Request requestBody = paymentAdapter.createPaymentRequest(order);
 		String stringResponse = paymentClient.doPayment(requestBody);
 		PaymentResponsePayu response = null;
 		try {
@@ -48,8 +48,28 @@ public class PaymentServiceImpl implements PaymentService {
 			entity.setTransactionId(response.getTransactionResponse().getTransactionId());
 			entity.setPaymentOrderId(response.getTransactionResponse().getOrderId());
 		} else {
-			entity.setState(response.getTxStatus());
+			entity.setState(response.getStatus());
 		}
+		System.out.println(response);
 		return entity;
+	}
+
+	@Override public Order doRefund(Order order) {
+
+		Request refundRequest = paymentAdapter.createRefundRequest(order);
+		String StringRefundResponse = paymentClient.doRefund(refundRequest);
+		PaymentResponsePayu response = null;
+		try {
+			response = (PaymentResponsePayu) paymentAdapter.adaptPaymentResponse(StringRefundResponse);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		if (response.getStatus().equals("SUCCESS")) {
+			order.setState("REFUNDED");
+		} else {
+			order.setState(response.getStatus());
+		}
+		System.out.println(response);
+		return order;
 	}
 }

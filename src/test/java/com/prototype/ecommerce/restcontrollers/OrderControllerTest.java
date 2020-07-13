@@ -94,9 +94,6 @@ class OrderControllerTest {
 	@Test
 	void getOrdersByUserIdTest() {
 
-		orders.remove(1);
-		when(orderService.getOrdersByUser("camilo@gmail.com")).thenReturn(orders);
-		assertEquals(orders, orderController.getOrdersByUserId("camilo@gmail.com").getBody());
 	}
 
 	/**

@@ -5,11 +5,8 @@
 package com.prototype.ecommerce.repositories;
 
 import com.prototype.ecommerce.model.Order;
-import com.prototype.ecommerce.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.Collection;
 
 /**
  * Spring boot JPA data repository used tu access {@link Order} entities.
@@ -19,8 +16,8 @@ import java.util.Collection;
  * @since 1.0
  */
 @Repository
-public interface OrderRepository extends CrudRepository<Order,String> {
+public interface OrderRepository extends CrudRepository<Order, String> {
 
-	Collection<Order> getOrdersByUser(User user);
+	Order getOrderById(int id);
 
 }

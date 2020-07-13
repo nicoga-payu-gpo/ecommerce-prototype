@@ -5,12 +5,9 @@
 package com.prototype.ecommerce.services;
 
 import com.prototype.ecommerce.model.Order;
-import com.prototype.ecommerce.model.User;
 import com.prototype.ecommerce.model.dtos.OrderDto;
 import com.prototype.ecommerce.repositories.OrderRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
 
 /**
  * Service implementation that exposes functionalities to manipulate {@linkplain Order} entities
@@ -60,9 +57,9 @@ public class OrderServiceImpl implements OrderService {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override public Collection<Order> getOrdersByUser(String email) {
+	@Override public Order getOrdersById(String id) {
 
-		return orderRepository.getOrdersByUser(new User("", email, ""));
+		return orderRepository.getOrderById(Integer.parseInt(id));
 	}
 
 	/**
