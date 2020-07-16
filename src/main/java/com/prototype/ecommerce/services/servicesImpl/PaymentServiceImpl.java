@@ -12,6 +12,8 @@ import com.prototype.ecommerce.model.paymentpojos.response.PaymentResponsePayu;
 import com.prototype.ecommerce.restClient.PaymentClient;
 import com.prototype.ecommerce.services.PaymentService;
 import com.prototype.ecommerce.services.adapters.PaymentAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,6 +25,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PaymentServiceImpl implements PaymentService {
+
+	/**
+	 * Logger class.
+	 */
+	private static final Logger LOGGER = LoggerFactory.getLogger(PaymentServiceImpl.class);
 
 	/**
 	 * Adapter for payment request creation.
@@ -58,20 +65,23 @@ public class PaymentServiceImpl implements PaymentService {
 
 		Request requestBody = paymentAdapter.createPaymentRequest(order);
 		String stringResponse = paymentClient.doPayment(requestBody);
+		LOGGER.info("Payment transaction, PayU response received:{}", stringResponse);
 		PaymentResponsePayu response = null;
 		try {
 			response = (PaymentResponsePayu) paymentAdapter.adaptPaymentResponse(stringResponse);
 		} catch (JsonProcessingException e) {
+			LOGGER.error("Error while parsing the response into JSON format");
 			e.printStackTrace();
 		}
 		if (response.getStatus().equals("SUCCESS")) {
 			entity.setState(response.getTxStatus());
 			entity.setTransactionId(response.getTransactionResponse().getTransactionId());
 			entity.setPaymentOrderId(response.getTransactionResponse().getOrderId());
+			LOGGER.info("Payment transaction, payment approved:{}", entity);
 		} else {
 			entity.setState(response.getStatus());
+			LOGGER.warn("Payment transaction, payment declined:{}",entity);
 		}
-		System.out.println(response);
 		return entity;
 	}
 
@@ -82,18 +92,21 @@ public class PaymentServiceImpl implements PaymentService {
 
 		Request refundRequest = paymentAdapter.createRefundRequest(order);
 		String StringRefundResponse = paymentClient.doRefund(refundRequest);
+		LOGGER.info("Refund transaction, payU response received:{}", StringRefundResponse);
 		PaymentResponsePayu response = null;
 		try {
 			response = (PaymentResponsePayu) paymentAdapter.adaptPaymentResponse(StringRefundResponse);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
+			LOGGER.error("Error while parsing the response into JSON format");
 		}
 		if (response.getStatus().equals("SUCCESS")) {
 			order.setState("REFUNDED");
+			LOGGER.info("Refund transaction, transaction successfully refunded:{}", order);
 		} else {
 			order.setState(response.getStatus());
+			LOGGER.info("Refund transaction, transaction refund declined:{}",order);
 		}
-		System.out.println(response);
 		return order;
 	}
 

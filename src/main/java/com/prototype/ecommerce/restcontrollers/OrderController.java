@@ -10,6 +10,8 @@ import com.prototype.ecommerce.model.dtos.OrderDto;
 import com.prototype.ecommerce.services.OrderService;
 import com.prototype.ecommerce.services.PaymentService;
 import com.prototype.ecommerce.services.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +27,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("API/orders")
 @RestController
 public class OrderController {
+
+	/**
+	 * Logger class.
+	 */
+	private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
 	/**
 	 * Service for entity {@linkplain Order}.
@@ -65,6 +72,7 @@ public class OrderController {
 	@GetMapping
 	public ResponseEntity<Iterable<Order>> getOrdersHandler() {
 
+		LOGGER.info("Get orders handler invoked");
 		try {
 			Iterable<Order> orders = orderService.getOrders();
 			for (Order o : orders) {
@@ -73,8 +81,8 @@ public class OrderController {
 			}
 			return new ResponseEntity<>(orders, HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
-
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			LOGGER.error("Error while fetching orders caused by:{}", ex.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -88,13 +96,14 @@ public class OrderController {
 	@PostMapping(value = "/refund", consumes = "text/plain")
 	public ResponseEntity<Order> doRefundHandler(@RequestBody String orderId) {
 
+		LOGGER.info("Do refund handler invoked for order id:{}", orderId);
 		try {
 			Order order = orderService.getOrdersById(orderId);
 			order = paymentService.doRefund(order);
 			return new ResponseEntity<>(orderService.updateOrder(order), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
-			ex.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			LOGGER.error("Error while processing refund for order id:{} caused by:{}", orderId, ex.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -108,6 +117,7 @@ public class OrderController {
 	@PostMapping
 	public ResponseEntity<Order> createAndPayOrderHandler(@RequestBody OrderDto order) {
 
+		LOGGER.info("Create and pay order handler invoked for order:{}", order);
 		try {
 			Order entity = orderService.createOrder(order);
 			order.setId(entity.getId());
@@ -119,6 +129,7 @@ public class OrderController {
 			}
 			return new ResponseEntity<>(orderService.updateOrder(entity), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
+			LOGGER.error("Error while creating and paying order:{} caused by:{}", order, ex.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -132,12 +143,13 @@ public class OrderController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PutMapping
 	public ResponseEntity<Order> updateOrderHandler(@RequestBody Order order) {
-		try {
 
+		LOGGER.info("Update order handler invoked for order id:{}", order.getId());
+		try {
 			return new ResponseEntity<>(orderService.updateOrder(order), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
-
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			LOGGER.error("Error while updating  order id:{} caused by:{}", order.getId(), ex.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

@@ -14,6 +14,8 @@ import com.prototype.ecommerce.model.paymentpojos.refundrequest.RefundRequestPay
 import com.prototype.ecommerce.model.paymentpojos.refundrequest.RefundTransaction;
 import com.prototype.ecommerce.model.paymentpojos.response.PaymentResponsePayu;
 import com.prototype.ecommerce.utils.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,6 +27,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PayuAdapter implements PaymentAdapter {
+
+	/**
+	 * Logger class.
+	 */
+	private static final Logger LOGGER = LoggerFactory.getLogger(PayuAdapter.class);
 
 	/**
 	 * Merchant api key.
@@ -77,9 +84,10 @@ public class PayuAdapter implements PaymentAdapter {
 		Transaction transaction = new Transaction(paymentOrder, paymentPayer, card, "AUTHORIZATION_AND_CAPTURE",
 				data.getPayer().getCardFranchise(), "CO", "127.0.0.1", "127.0.0.1", "DFAS",
 				"Mozilla/5.0 (Windows NT 5.1; rv:18.0) Gecko/20100101 Firefox/18.0");
-
-		return new PaymentPayU("es", "SUBMIT_TRANSACTION", new Merchant(API_KEY, API_LOGIN), transaction,
+		PaymentPayU request = new PaymentPayU("es", "SUBMIT_TRANSACTION", new Merchant(API_KEY, API_LOGIN), transaction,
 				true);
+		LOGGER.info("Payment request successfully created:{}", request);
+		return request;
 	}
 
 	/**
@@ -88,8 +96,9 @@ public class PayuAdapter implements PaymentAdapter {
 	@Override public PaymentResponsePayu adaptPaymentResponse(String response) throws JsonProcessingException {
 
 		XmlMapper xmlMapper = new XmlMapper();
-		System.out.println(response);
-		return xmlMapper.readValue(response, PaymentResponsePayu.class);
+		PaymentResponsePayu adaptedResponse = xmlMapper.readValue(response, PaymentResponsePayu.class);
+		LOGGER.info("PayU response successfully adapted:{}", adaptedResponse);
+		return adaptedResponse;
 	}
 
 	@Override public RefundRequestPayu createRefundRequest(Order order) {
@@ -98,7 +107,10 @@ public class PayuAdapter implements PaymentAdapter {
 		RefundTransaction transaction = new RefundTransaction(
 				new RefundOrder(order.getPaymentOrderId().trim()),
 				"REFUND", "CLIENT REQUEST", order.getTransactionId().trim());
-		return new RefundRequestPayu("es", "SUBMIT_TRANSACTION", refundMerchant, transaction, true);
+		RefundRequestPayu refundRequest = new RefundRequestPayu("es", "SUBMIT_TRANSACTION", refundMerchant, transaction,
+				true);
+		LOGGER.info("PayU refund request successfully created:{}", refundRequest);
+		return refundRequest;
 	}
 
 }

@@ -8,6 +8,8 @@ import com.prototype.ecommerce.model.User;
 import com.prototype.ecommerce.services.UserService;
 import com.prototype.ecommerce.utils.StringUtils;
 import com.prototype.ecommerce.utils.Token;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +27,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("API/user")
 @RestController
 public class UserController {
+
+	/**
+	 * Logger class.
+	 */
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
 	/**
 	 * Service for entity {@linkplain User}.
@@ -50,10 +57,16 @@ public class UserController {
 	@PostMapping("/signUp")
 	public ResponseEntity<User> createUserHandler(@RequestBody User user) {
 
-		user.setRole("ROLE_USER");
-		user.setPassword(StringUtils.getMD5Hash(user.getPassword()));
-		userService.createUser(user);
-		return new ResponseEntity<>(HttpStatus.ACCEPTED);
+		LOGGER.info("Create user handler invoked");
+		try {
+			user.setRole("ROLE_USER");
+			user.setPassword(StringUtils.getMD5Hash(user.getPassword()));
+			userService.createUser(user);
+			return new ResponseEntity<>(HttpStatus.ACCEPTED);
+		} catch (Exception ex) {
+			LOGGER.error("Error while creating the user caused by:{}", ex.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	/**
@@ -65,16 +78,24 @@ public class UserController {
 	@PostMapping("/signIn")
 	public ResponseEntity<Token> loginUserHandler(@RequestBody User login) {
 
-		if (login.getEmail() == null || login.getPassword() == null) {
-			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		LOGGER.info("Login user handler invoked");
+		try {
+			if (login.getEmail() == null || login.getPassword() == null) {
+				LOGGER.info("Email or/and password were empty");
+				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+			}
+			User user = userService.getUser(login.getEmail());
+			if (user == null || !StringUtils.isPasswordValid(login.getPassword(), user.getPassword().trim())) {
+				LOGGER.info("Wrong email or password");
+				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+			}
+			user.setPassword(null);
+			Token token = new Token(user);
+			return new ResponseEntity<>(token, HttpStatus.ACCEPTED);
+		} catch (Exception ex) {
+			LOGGER.error("Error while login in the user caused by:{}", ex.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		User user = userService.getUser(login.getEmail());
-		if (user == null || !StringUtils.isPasswordValid(login.getPassword(), user.getPassword().trim())) {
-			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-		}
-		user.setPassword(null);
-		Token token = new Token(user);
-		return new ResponseEntity<>(token, HttpStatus.ACCEPTED);
 	}
 
 }

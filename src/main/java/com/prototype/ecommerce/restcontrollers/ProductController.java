@@ -6,6 +6,8 @@ package com.prototype.ecommerce.restcontrollers;
 
 import com.prototype.ecommerce.model.Product;
 import com.prototype.ecommerce.services.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +23,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("API/products")
 @RestController
 public class ProductController {
+
+	/**
+	 * Logger class.
+	 */
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
 	/**
 	 * The CRUD service for the entity {@linkplain Product}
@@ -45,12 +52,13 @@ public class ProductController {
 	@GetMapping
 	public ResponseEntity<Iterable<Product>> getProductsHandler() {
 
+		LOGGER.info("Get products handler invoked");
 		try {
 
 			return new ResponseEntity<>(productService.getProducts(), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
-
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			LOGGER.error("Error while fetching products caused by:{}", ex.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -64,11 +72,12 @@ public class ProductController {
 	@PostMapping
 	public ResponseEntity<Product> createProductHandler(@RequestBody Product product) {
 
+		LOGGER.info("Create product handler invoked");
 		try {
 
 			return new ResponseEntity<>(productService.createProduct(product), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
-
+			LOGGER.error("Error while creating the product caused by:{}", ex.getMessage());
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
@@ -83,11 +92,12 @@ public class ProductController {
 	@PutMapping
 	public ResponseEntity<Product> updateProductHandler(@RequestBody Product product) {
 
+		LOGGER.info("Update product handler invoked");
 		try {
 
 			return new ResponseEntity<>(productService.updateProduct(product), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
-
+			LOGGER.error("Error while updating the product caused by:{}", ex.getMessage());
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
@@ -102,10 +112,12 @@ public class ProductController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteProductHandler(@PathVariable String id) {
 
+		LOGGER.info("Delete product handler invoked");
 		try {
 			productService.deleteProduct(Integer.parseInt(id));
 			return new ResponseEntity<>(HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
+			LOGGER.error("Error while deleting the product caused by:{}", ex.getMessage());
 			return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}

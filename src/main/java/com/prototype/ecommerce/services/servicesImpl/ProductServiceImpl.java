@@ -7,6 +7,8 @@ package com.prototype.ecommerce.services.servicesImpl;
 import com.prototype.ecommerce.model.Product;
 import com.prototype.ecommerce.repositories.ProductRepository;
 import com.prototype.ecommerce.services.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,6 +20,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ProductServiceImpl implements ProductService {
+
+	/**
+	 * Logger class.
+	 */
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProductServiceImpl.class);
 
 	/**
 	 * {@linkplain Product} entities JPA repository.
@@ -39,7 +46,9 @@ public class ProductServiceImpl implements ProductService {
 	 */
 	@Override public Product createProduct(Product product) {
 
-		return productRepository.save(product);
+		Product entity = productRepository.save(product);
+		LOGGER.info("Product:{} successfully saved on the DB.", entity);
+		return entity;
 	}
 
 	/**
@@ -47,7 +56,9 @@ public class ProductServiceImpl implements ProductService {
 	 */
 	@Override public Iterable<Product> getProducts() {
 
-		return productRepository.findAll();
+		Iterable<Product> products = productRepository.findAll();
+		LOGGER.info("Products fetched from the DB.");
+		return products;
 	}
 
 	/**
@@ -55,15 +66,19 @@ public class ProductServiceImpl implements ProductService {
 	 */
 	@Override public Product updateProduct(Product product) {
 
-		return productRepository.save(product);
+		Product entity = productRepository.save(product);
+		LOGGER.info("Product with id:{} successfully updated to: {} in the DB.", product.getId(), entity);
+		return entity;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override public void deleteProduct(int id) {
-		Product p=new Product();
+
+		Product p = new Product();
 		p.setId(id);
 		productRepository.delete(p);
+		LOGGER.info("Product with id:{} successfully deleted of the DB.",id);
 	}
 }
