@@ -46,7 +46,7 @@ public class OrderController {
 	 *
 	 * @param orderService   The order service.
 	 * @param paymentService Payment service.
-	 * @param productService
+	 * @param productService Product service.
 	 */
 	public OrderController(OrderService orderService, PaymentService paymentService,
 			ProductService productService) {
@@ -90,7 +90,8 @@ public class OrderController {
 
 		try {
 			Order order = orderService.getOrdersById(orderId);
-			return new ResponseEntity<>(paymentService.doRefund(order), HttpStatus.ACCEPTED);
+			order = paymentService.doRefund(order);
+			return new ResponseEntity<>(orderService.updateOrder(order), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

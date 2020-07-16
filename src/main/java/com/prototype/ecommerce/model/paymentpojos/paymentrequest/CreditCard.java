@@ -7,108 +7,131 @@ package com.prototype.ecommerce.model.paymentpojos.paymentrequest;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.Serializable;
 
+/**
+ * POJO of a credit card for a Payu payment request.
+ *
+ * @author Nicolas Garcia (nicolas.garcia@payulatam.com)
+ * @version 1.0
+ * @since 1.0
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "number",
-        "securityCode",
-        "expirationDate",
-        "name"
+		"number",
+		"securityCode",
+		"expirationDate",
+		"name"
 })
 public class CreditCard implements Serializable {
 
-    private static final long serialVersionUID = 6898575016572678948L;
+	/**
+	 * Serializable class version number.
+	 */
+	private static final long serialVersionUID = 6898575016572678948L;
 
-    @JsonProperty("number")
-    private String number;
+	/**
+	 * Credit card number.
+	 */
+	@JsonProperty("number")
+	private String number;
 
-    @JsonProperty("securityCode")
-    private String securityCode;
+	/**
+	 * Security code.
+	 */
+	@JsonProperty("securityCode")
+	private String securityCode;
 
-    @JsonProperty("expirationDate")
-    private String expirationDate;
+	/**
+	 * Expiration date.
+	 */
+	@JsonProperty("expirationDate")
+	private String expirationDate;
 
-    @JsonProperty("name")
-    private String name;
+	/**
+	 * Card holder name.
+	 */
+	@JsonProperty("name")
+	private String name;
 
-    /**
-     * No args constructor for use in serialization
-     */
-    public CreditCard() {
+	/**
+	 * No args constructor for use in serialization
+	 */
+	public CreditCard() {
 
-    }
+	}
 
-    /**
-     * @param number         Number of credit card.
-     * @param name           Holder name of the credit card.
-     * @param securityCode   Security code of the credit card.
-     * @param expirationDate Expiration date of the credit card.
-     */
-    public CreditCard(String number, String securityCode, String expirationDate, String name) {
+	/**
+	 * @param number         Number of credit card.
+	 * @param name           Holder name of the credit card.
+	 * @param securityCode   Security code of the credit card.
+	 * @param expirationDate Expiration date of the credit card.
+	 */
+	public CreditCard(String number, String securityCode, String expirationDate, String name) {
 
-        super();
-        this.number = number;
-        this.securityCode = securityCode;
-        this.expirationDate = expirationDate;
-        this.name = name;
-    }
+		super();
+		this.number = number;
+		this.securityCode = securityCode;
+		this.expirationDate = expirationDate;
+		this.name = name;
+	}
 
-    @JsonProperty("number")
-    public String getNumber() {
+	@JsonProperty("number")
+	public String getNumber() {
 
-        return number;
-    }
+		return number;
+	}
 
-    @JsonProperty("number")
-    public void setNumber(String number) {
+	@JsonProperty("number")
+	public void setNumber(String number) {
 
-        this.number = number;
-    }
+		this.number = number;
+	}
 
-    @JsonProperty("securityCode")
-    public String getSecurityCode() {
+	@JsonProperty("securityCode")
+	public String getSecurityCode() {
 
-        return securityCode;
-    }
+		return securityCode;
+	}
 
-    @JsonProperty("securityCode")
-    public void setSecurityCode(String securityCode) {
+	@JsonProperty("securityCode")
+	public void setSecurityCode(String securityCode) {
 
-        this.securityCode = securityCode;
-    }
+		this.securityCode = securityCode;
+	}
 
-    @JsonProperty("expirationDate")
-    public String getExpirationDate() {
+	@JsonProperty("expirationDate")
+	public String getExpirationDate() {
 
-        return expirationDate;
-    }
+		return expirationDate;
+	}
 
-    @JsonProperty("expirationDate")
-    public void setExpirationDate(String expirationDate) {
+	@JsonProperty("expirationDate")
+	public void setExpirationDate(String expirationDate) {
 
-        this.expirationDate = expirationDate;
-    }
+		this.expirationDate = expirationDate;
+	}
 
-    @JsonProperty("name")
-    public String getName() {
+	@JsonProperty("name")
+	public String getName() {
 
-        return name;
-    }
+		return name;
+	}
 
-    @JsonProperty("name")
-    public void setName(String name) {
+	@JsonProperty("name")
+	public void setName(String name) {
 
-        this.name = name;
-    }
+		this.name = name;
+	}
 
-    @Override
-    public String toString() {
+	@Override public String toString() {
 
-        return new ToStringBuilder(this).append("number", number).append("securityCode", securityCode)
-                .append("expirationDate", expirationDate).append("name", name).toString();
-    }
-
+		return "CreditCard{" +
+				"number='" + number + '\'' +
+				", securityCode='" + securityCode + '\'' +
+				", expirationDate='" + expirationDate + '\'' +
+				", name='" + name + '\'' +
+				'}';
+	}
 }

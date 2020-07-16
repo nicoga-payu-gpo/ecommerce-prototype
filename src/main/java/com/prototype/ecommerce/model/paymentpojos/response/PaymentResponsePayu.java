@@ -1,12 +1,22 @@
+/*
+ * PayU Latam - Copyright (c) 2013 - 2020
+ * http://www.payu.com.co
+ */
 package com.prototype.ecommerce.model.paymentpojos.response;
 
 import com.fasterxml.jackson.annotation.*;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * POJO of payment response of PayU.
+ *
+ * @author Nicolas Garcia (nicolas.garcia@payulatam.com)
+ * @version 1.0
+ * @since 1.0
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
 		"code",
@@ -14,11 +24,20 @@ import java.util.Map;
 })
 public class PaymentResponsePayu extends PaymentResponse implements Serializable {
 
+	/**
+	 * Serializable class  version number.
+	 */
 	private static final long serialVersionUID = 4586426728673723225L;
 
+	/**
+	 * Additional properties in the response.
+	 */
 	@JsonIgnore
 	private final Map<String, Object> additionalProperties = new HashMap<>();
 
+	/**
+	 * Transaction response.
+	 */
 	@JsonProperty("transactionResponse")
 	private TransactionResponse transactionResponse;
 
@@ -26,16 +45,20 @@ public class PaymentResponsePayu extends PaymentResponse implements Serializable
 	 * No args constructor for use in serialization
 	 */
 	public PaymentResponsePayu() {
-
+		//Do nothing
 	}
 
 	/**
-	 * @param transactionResponse Response provided by Payu.
+	 * Constructor of PayU payment response
+	 *
+	 * @param status              {@inheritDoc}
+	 * @param txStatus            {@inheritDoc}
+	 * @param transactionResponse Transaction payU response.
 	 */
-	public PaymentResponsePayu(TransactionResponse transactionResponse) {
+	public PaymentResponsePayu(String status, String txStatus,
+			TransactionResponse transactionResponse) {
 
-		super();
-
+		super(status, txStatus);
 		this.transactionResponse = transactionResponse;
 	}
 
@@ -81,11 +104,11 @@ public class PaymentResponsePayu extends PaymentResponse implements Serializable
 		this.additionalProperties.put(name, value);
 	}
 
-	@Override
-	public String toString() {
+	@Override public String toString() {
 
-		return new ToStringBuilder(this).append("Status", getStatus())
-				.append("transactionResponse", transactionResponse).toString();
+		return "PaymentResponsePayu{" +
+				"additionalProperties=" + additionalProperties +
+				", transactionResponse=" + transactionResponse +
+				'}';
 	}
-
 }

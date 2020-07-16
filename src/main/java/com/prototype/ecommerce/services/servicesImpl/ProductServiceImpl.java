@@ -2,10 +2,11 @@
  * PayU Latam - Copyright (c) 2013 - 2020
  * http://www.payu.com.co
  */
-package com.prototype.ecommerce.services;
+package com.prototype.ecommerce.services.servicesImpl;
 
 import com.prototype.ecommerce.model.Product;
 import com.prototype.ecommerce.repositories.ProductRepository;
+import com.prototype.ecommerce.services.ProductService;
 import org.springframework.stereotype.Service;
 
 /**

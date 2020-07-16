@@ -2,12 +2,15 @@
  * PayU Latam - Copyright (c) 2013 - 2020
  * http://www.payu.com.co
  */
-package com.prototype.ecommerce.services;
+package com.prototype.ecommerce.services.servicesImpl;
 
 import com.prototype.ecommerce.model.Order;
 import com.prototype.ecommerce.model.dtos.OrderDto;
 import com.prototype.ecommerce.repositories.OrderRepository;
+import com.prototype.ecommerce.services.OrderService;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 /**
  * Service implementation that exposes functionalities to manipulate {@linkplain Order} entities
@@ -39,11 +42,9 @@ public class OrderServiceImpl implements OrderService {
 	 */
 	@Override public Order createOrder(OrderDto order) {
 
-		Order entity = orderRepository
-				.save(new Order(order.getId(), order.getState(), order.getTotal(), order.getDate(),
-						order.getTransactionId(), order.getPaymentOrderId(), order.getUnits(), order.getProduct(),
-						order.getUser(), order.getBuyerDniNumber(), order.getBuyerPhone(), order.getShippingAddress()));
-		return orderRepository.save(entity);
+		return orderRepository.save(new Order(order.getId(), order.getState(), order.getTotal(), new Date(),
+				order.getTransactionId(), order.getPaymentOrderId(), order.getUnits(), order.getProduct(),
+				order.getUser(), order.getBuyerDniNumber(), order.getBuyerPhone(), order.getShippingAddress()));
 	}
 
 	/**

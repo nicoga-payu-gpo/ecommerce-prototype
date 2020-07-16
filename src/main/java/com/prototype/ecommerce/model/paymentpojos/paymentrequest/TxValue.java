@@ -7,10 +7,16 @@ package com.prototype.ecommerce.model.paymentpojos.paymentrequest;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.Serializable;
 
+/**
+ * POJO value of the transaction  to process the payment with PayU.
+ *
+ * @author Nicolas Garcia (nicolas.garcia@payulatam.com)
+ * @version 1.0
+ * @since 1.0
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "value",
@@ -18,11 +24,20 @@ import java.io.Serializable;
 })
 public class TxValue implements Serializable {
 
+    /**
+     * Serializable class  version number.
+     */
     private static final long serialVersionUID = 7596599061997063905L;
 
+    /**
+     * Value.
+     */
     @JsonProperty("value")
     private float value;
 
+    /**
+     * Currency.
+     */
     @JsonProperty("currency")
     private String currency;
 
@@ -68,10 +83,11 @@ public class TxValue implements Serializable {
         this.currency = currency;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
 
-        return new ToStringBuilder(this).append("value", value).append("currency", currency).toString();
+        return "TxValue{" +
+                "value=" + value +
+                ", currency='" + currency + '\'' +
+                '}';
     }
-
 }

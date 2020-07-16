@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.io.Serializable;
 
 /**
- * POJO of a buyer for a Payu payment request.
+ * POJO of the payer of the order.
  *
  * @author Nicolas Garcia (nicolas.garcia@payulatam.com)
  * @version 1.0
@@ -19,93 +19,94 @@ import java.io.Serializable;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-		"merchantBuyerId",
+		"merchantPayerId",
 		"fullName",
 		"emailAddress",
 		"contactPhone",
 		"dniNumber",
-		"shippingAddress"
+		"billingAddress"
 })
-public class Buyer implements Serializable {
+public class PaymentPayer implements Serializable {
 
 	/**
-	 * Serializable class  version number
+	 * Serializable class  version number.
 	 */
-	private static final long serialVersionUID = 1369164545871014928L;
+	private static final long serialVersionUID = 6332477753309782174L;
 
 	/**
-	 * Buyer id.
+	 * Payer id.
 	 */
-	@JsonProperty("merchantBuyerId")
-	private String merchantBuyerId;
+	@JsonProperty("merchantPayerId")
+	private String merchantPayerId;
 
 	/**
-	 * Buyer full name.
+	 * Full name.
 	 */
 	@JsonProperty("fullName")
 	private String fullName;
 
 	/**
-	 * Email.
+	 * Email address.
 	 */
 	@JsonProperty("emailAddress")
 	private String emailAddress;
 
 	/**
-	 * Contact phone number.
+	 * Phone number.
 	 */
 	@JsonProperty("contactPhone")
 	private String contactPhone;
 
 	/**
-	 * Dni number.
+	 * DNI number.
 	 */
 	@JsonProperty("dniNumber")
 	private String dniNumber;
 
 	/**
-	 * Shipping address of the product.
+	 * Billing address.
 	 */
-	@JsonProperty("shippingAddress")
-	private PaymentAddress shippingPaymentAddress;
+	@JsonProperty("billingAddress")
+	private PaymentAddress billingAddress;
 
 	/**
 	 * No args constructor for use in serialization
 	 */
-	public Buyer() {
+	public PaymentPayer() {
 
 	}
 
 	/**
-	 * @param dniNumber              DNI number of the buyer.
-	 * @param emailAddress           email of the buyer.
-	 * @param merchantBuyerId        Identification number in the system for the buyer.
-	 * @param fullName               Full name of the buyer.
-	 * @param shippingPaymentAddress Shipping address for the product.
-	 * @param contactPhone           Phone number of the buyer.
+	 * @param dniNumber       DNI number of the payer.
+	 * @param emailAddress    email of the payer.
+	 * @param fullName        Full name of the payer.
+	 * @param billingAddress  Billing address of the payer.
+	 * @param contactPhone    Phone number of the payer.
+	 * @param merchantPayerId Identification number in the system for the payer.
 	 */
-	public Buyer(String merchantBuyerId, String fullName, String emailAddress, String contactPhone, String dniNumber,
-			PaymentAddress shippingPaymentAddress) {
+	public PaymentPayer(String merchantPayerId, String fullName, String emailAddress, String contactPhone,
+			String dniNumber,
+			PaymentAddress billingAddress) {
 
 		super();
-		this.merchantBuyerId = merchantBuyerId;
+		this.merchantPayerId = merchantPayerId;
 		this.fullName = fullName;
 		this.emailAddress = emailAddress;
 		this.contactPhone = contactPhone;
 		this.dniNumber = dniNumber;
-		this.shippingPaymentAddress = shippingPaymentAddress;
+		this.billingAddress = billingAddress;
 	}
 
-	@JsonProperty("merchantBuyerId")
-	public String getMerchantBuyerId() {
+	@JsonProperty("merchantPayerId")
+	public String getMerchantPayerId() {
 
-		return merchantBuyerId;
+		return merchantPayerId;
 	}
 
-	@JsonProperty("merchantBuyerId")
-	public void setMerchantBuyerId(String merchantBuyerId) {
+	@JsonProperty("merchantPayerId")
+	public void setMerchantPayerId(String merchantPayerId) {
 
-		this.merchantBuyerId = merchantBuyerId;
+		this.merchantPayerId = merchantPayerId;
 	}
 
 	@JsonProperty("fullName")
@@ -156,27 +157,27 @@ public class Buyer implements Serializable {
 		this.dniNumber = dniNumber;
 	}
 
-	@JsonProperty("shippingAddress")
-	public PaymentAddress getShippingPaymentAddress() {
+	@JsonProperty("billingAddress")
+	public PaymentAddress getBillingAddress() {
 
-		return shippingPaymentAddress;
+		return billingAddress;
 	}
 
-	@JsonProperty("shippingAddress")
-	public void setShippingPaymentAddress(PaymentAddress shippingPaymentAddress) {
+	@JsonProperty("billingAddress")
+	public void setBillingAddress(PaymentAddress billingAddress) {
 
-		this.shippingPaymentAddress = shippingPaymentAddress;
+		this.billingAddress = billingAddress;
 	}
 
 	@Override public String toString() {
 
-		return "Buyer{" +
-				"merchantBuyerId='" + merchantBuyerId + '\'' +
+		return "Payer{" +
+				"merchantPayerId='" + merchantPayerId + '\'' +
 				", fullName='" + fullName + '\'' +
 				", emailAddress='" + emailAddress + '\'' +
 				", contactPhone='" + contactPhone + '\'' +
 				", dniNumber='" + dniNumber + '\'' +
-				", shippingAddress=" + shippingPaymentAddress +
+				", billingAddress=" + billingAddress +
 				'}';
 	}
 }

@@ -6,6 +6,7 @@ package com.prototype.ecommerce.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Product definition.
@@ -71,7 +72,7 @@ public class Product implements Serializable {
 
 		this.id = id;
 		this.name = name;
-		this.description = description;
+		this.description = description.trim();
 		this.availableUnits = availableUnits;
 		this.price = price;
 	}
@@ -103,7 +104,7 @@ public class Product implements Serializable {
 	 */
 	public String getName() {
 
-		return name;
+		return name.trim();
 	}
 
 	/**
@@ -123,7 +124,7 @@ public class Product implements Serializable {
 	 */
 	public String getDescription() {
 
-		return description;
+		return description.trim();
 	}
 
 	/**
@@ -179,11 +180,30 @@ public class Product implements Serializable {
 	@Override public String toString() {
 
 		return "Product{" +
-				"id='" + id + '\'' +
+				"id=" + id +
 				", name='" + name + '\'' +
 				", description='" + description + '\'' +
-				", units=" + availableUnits +
+				", availableUnits=" + availableUnits +
 				", price=" + price +
 				'}';
+	}
+
+	@Override public boolean equals(Object o) {
+
+		if (this == o)
+			return true;
+		if (!(o instanceof Product))
+			return false;
+		Product product = (Product) o;
+		return id == product.id &&
+				availableUnits == product.availableUnits &&
+				Float.compare(product.price, price) == 0 &&
+				Objects.equals(name, product.name) &&
+				Objects.equals(description, product.description);
+	}
+
+	@Override public int hashCode() {
+
+		return Objects.hash(id, name, description, availableUnits, price);
 	}
 }

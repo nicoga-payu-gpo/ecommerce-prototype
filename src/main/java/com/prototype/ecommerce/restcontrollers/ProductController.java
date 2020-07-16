@@ -100,7 +100,7 @@ public class ProductController {
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> updateProductHandler(@PathVariable String id) {
+	public ResponseEntity<String> deleteProductHandler(@PathVariable String id) {
 
 		try {
 			productService.deleteProduct(Integer.parseInt(id));

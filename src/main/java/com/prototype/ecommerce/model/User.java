@@ -4,8 +4,12 @@
  */
 package com.prototype.ecommerce.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * User definition.
@@ -170,5 +174,23 @@ public class User implements Serializable {
 				", email='" + email + '\'' +
 				", role='" + role + '\'' +
 				'}';
+	}
+
+	@Override public boolean equals(Object o) {
+
+		if (this == o)
+			return true;
+		if (!(o instanceof User))
+			return false;
+		User user = (User) o;
+		return email.equals(user.email) &&
+				Objects.equals(fullName, user.fullName) &&
+				Objects.equals(password, user.password) &&
+				Objects.equals(role, user.role);
+	}
+
+	@Override public int hashCode() {
+
+		return Objects.hash(email, fullName, password, role);
 	}
 }

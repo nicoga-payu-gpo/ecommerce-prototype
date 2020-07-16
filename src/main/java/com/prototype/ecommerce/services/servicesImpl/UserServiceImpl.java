@@ -2,10 +2,11 @@
  * PayU Latam - Copyright (c) 2013 - 2020
  * http://www.payu.com.co
  */
-package com.prototype.ecommerce.services;
+package com.prototype.ecommerce.services.servicesImpl;
 
 import com.prototype.ecommerce.model.User;
 import com.prototype.ecommerce.repositories.UserRepository;
+import com.prototype.ecommerce.services.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -50,4 +51,5 @@ public class UserServiceImpl implements UserService {
 		Optional<User> user=userRepository.findById(email);
 		return user.orElse(null);
 	}
+
 }

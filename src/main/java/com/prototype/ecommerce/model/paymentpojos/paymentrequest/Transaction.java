@@ -7,219 +7,265 @@ package com.prototype.ecommerce.model.paymentpojos.paymentrequest;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.Serializable;
 
+/**
+ * POJO transaction  to process the payment with PayU.
+ *
+ * @author Nicolas Garcia (nicolas.garcia@payulatam.com)
+ * @version 1.0
+ * @since 1.0
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "order",
-        "payer",
-        "creditCard",
-        "type",
-        "paymentMethod",
-        "paymentCountry",
-        "deviceSessionId",
-        "ipAddress",
-        "cookie",
-        "userAgent"
+		"order",
+		"payer",
+		"creditCard",
+		"type",
+		"paymentMethod",
+		"paymentCountry",
+		"deviceSessionId",
+		"ipAddress",
+		"cookie",
+		"userAgent"
 })
 public class Transaction implements Serializable {
 
-    private static final long serialVersionUID = -546870105272899746L;
-
-    @JsonProperty("order")
-    private Order order;
-
-    @JsonProperty("payer")
-    private Payer payer;
-
-    @JsonProperty("creditCard")
-    private CreditCard creditCard;
-
-    @JsonProperty("type")
-    private String type;
-
-    @JsonProperty("paymentMethod")
-    private String paymentMethod;
-
-    @JsonProperty("paymentCountry")
-    private String paymentCountry;
-
-    @JsonProperty("deviceSessionId")
-    private String deviceSessionId;
-
-    @JsonProperty("ipAddress")
-    private String ipAddress;
-
-    @JsonProperty("cookie")
-    private String cookie;
-
-    @JsonProperty("userAgent")
-    private String userAgent;
+	/**
+	 * Serializable class  version number.
+	 */
+	private static final long serialVersionUID = -546870105272899746L;
 
 	/**
-     * No args constructor for use in serialization
-     */
-    public Transaction() {
+	 * Order in the transaction.
+	 */
+	@JsonProperty("order")
+	private PaymentOrder paymentOrder;
 
-    }
+	/**
+	 * Transaction payer.
+	 */
+	@JsonProperty("payer")
+	private PaymentPayer paymentPayer;
 
-    /**
-     * @param deviceSessionId Session id.
-     * @param cookie          Cookie.
-     * @param ipAddress       IpAddress.
-     * @param paymentMethod   Payment Method.
-     * @param userAgent       User Agent in which the transaction is being made.
-     * @param creditCard      Credit card info.
-     * @param type            Type of transaction.
-     * @param payer           Payer info.
-     * @param paymentCountry  Payment country.
-     * @param order           Order info.
-     */
-    public Transaction(Order order, Payer payer, CreditCard creditCard, String type, String paymentMethod,
-            String paymentCountry, String deviceSessionId, String ipAddress, String cookie, String userAgent) {
+	/**
+	 * Credit card.
+	 */
+	@JsonProperty("creditCard")
+	private CreditCard creditCard;
 
-        super();
-        this.order = order;
-        this.payer = payer;
-        this.creditCard = creditCard;
-        this.type = type;
-        this.paymentMethod = paymentMethod;
-        this.paymentCountry = paymentCountry;
-        this.deviceSessionId = deviceSessionId;
-        this.ipAddress = ipAddress;
-        this.cookie = cookie;
-        this.userAgent = userAgent;
-    }
+	/**
+	 * Type of transaction.
+	 */
+	@JsonProperty("type")
+	private String type;
 
-    @JsonProperty("order")
-    public Order getOrder() {
+	/**
+	 * Payment method.
+	 */
+	@JsonProperty("paymentMethod")
+	private String paymentMethod;
 
-        return order;
-    }
+	/**
+	 * Payment country.
+	 */
+	@JsonProperty("paymentCountry")
+	private String paymentCountry;
 
-    @JsonProperty("order")
-    public void setOrder(Order order) {
+	/**
+	 * Device session id.
+	 */
+	@JsonProperty("deviceSessionId")
+	private String deviceSessionId;
 
-        this.order = order;
-    }
+	/**
+	 * Ip address.
+	 */
+	@JsonProperty("ipAddress")
+	private String ipAddress;
 
-    @JsonProperty("payer")
-    public Payer getPayer() {
+	/**
+	 * Cookie.
+	 */
+	@JsonProperty("cookie")
+	private String cookie;
 
-        return payer;
-    }
+	/**
+	 * User agent.
+	 */
+	@JsonProperty("userAgent")
+	private String userAgent;
 
-    @JsonProperty("payer")
-    public void setPayer(Payer payer) {
+	/**
+	 * No args constructor for use in serialization
+	 */
+	public Transaction() {
 
-        this.payer = payer;
-    }
+	}
 
-    @JsonProperty("creditCard")
-    public CreditCard getCreditCard() {
+	/**
+	 * @param deviceSessionId Session id.
+	 * @param cookie          Cookie.
+	 * @param ipAddress       IpAddress.
+	 * @param paymentMethod   Payment Method.
+	 * @param userAgent       User Agent in which the transaction is being made.
+	 * @param creditCard      Credit card info.
+	 * @param type            Type of transaction.
+	 * @param paymentPayer    Payer info.
+	 * @param paymentCountry  Payment country.
+	 * @param paymentOrder    Order info.
+	 */
+	public Transaction(PaymentOrder paymentOrder, PaymentPayer paymentPayer, CreditCard creditCard, String type,
+			String paymentMethod,
+			String paymentCountry, String deviceSessionId, String ipAddress, String cookie, String userAgent) {
 
-        return creditCard;
-    }
+		super();
+		this.paymentOrder = paymentOrder;
+		this.paymentPayer = paymentPayer;
+		this.creditCard = creditCard;
+		this.type = type;
+		this.paymentMethod = paymentMethod;
+		this.paymentCountry = paymentCountry;
+		this.deviceSessionId = deviceSessionId;
+		this.ipAddress = ipAddress;
+		this.cookie = cookie;
+		this.userAgent = userAgent;
+	}
 
-    @JsonProperty("creditCard")
-    public void setCreditCard(CreditCard creditCard) {
+	@JsonProperty("order")
+	public PaymentOrder getPaymentOrder() {
 
-        this.creditCard = creditCard;
-    }
+		return paymentOrder;
+	}
 
-    @JsonProperty("type")
-    public String getType() {
+	@JsonProperty("order")
+	public void setPaymentOrder(PaymentOrder paymentOrder) {
 
-        return type;
-    }
+		this.paymentOrder = paymentOrder;
+	}
 
-    @JsonProperty("type")
-    public void setType(String type) {
+	@JsonProperty("payer")
+	public PaymentPayer getPaymentPayer() {
 
-        this.type = type;
-    }
+		return paymentPayer;
+	}
 
-    @JsonProperty("paymentMethod")
-    public String getPaymentMethod() {
+	@JsonProperty("payer")
+	public void setPaymentPayer(PaymentPayer paymentPayer) {
 
-        return paymentMethod;
-    }
+		this.paymentPayer = paymentPayer;
+	}
 
-    @JsonProperty("paymentMethod")
-    public void setPaymentMethod(String paymentMethod) {
+	@JsonProperty("creditCard")
+	public CreditCard getCreditCard() {
 
-        this.paymentMethod = paymentMethod;
-    }
+		return creditCard;
+	}
 
-    @JsonProperty("paymentCountry")
-    public String getPaymentCountry() {
+	@JsonProperty("creditCard")
+	public void setCreditCard(CreditCard creditCard) {
 
-        return paymentCountry;
-    }
+		this.creditCard = creditCard;
+	}
 
-    @JsonProperty("paymentCountry")
-    public void setPaymentCountry(String paymentCountry) {
+	@JsonProperty("type")
+	public String getType() {
 
-        this.paymentCountry = paymentCountry;
-    }
+		return type;
+	}
 
-    @JsonProperty("deviceSessionId")
-    public String getDeviceSessionId() {
+	@JsonProperty("type")
+	public void setType(String type) {
 
-        return deviceSessionId;
-    }
+		this.type = type;
+	}
 
-    @JsonProperty("deviceSessionId")
-    public void setDeviceSessionId(String deviceSessionId) {
+	@JsonProperty("paymentMethod")
+	public String getPaymentMethod() {
 
-        this.deviceSessionId = deviceSessionId;
-    }
+		return paymentMethod;
+	}
 
-    @JsonProperty("ipAddress")
-    public String getIpAddress() {
+	@JsonProperty("paymentMethod")
+	public void setPaymentMethod(String paymentMethod) {
 
-        return ipAddress;
-    }
+		this.paymentMethod = paymentMethod;
+	}
 
-    @JsonProperty("ipAddress")
-    public void setIpAddress(String ipAddress) {
+	@JsonProperty("paymentCountry")
+	public String getPaymentCountry() {
 
-        this.ipAddress = ipAddress;
-    }
+		return paymentCountry;
+	}
 
-    @JsonProperty("cookie")
-    public String getCookie() {
+	@JsonProperty("paymentCountry")
+	public void setPaymentCountry(String paymentCountry) {
 
-        return cookie;
-    }
+		this.paymentCountry = paymentCountry;
+	}
 
-    @JsonProperty("cookie")
-    public void setCookie(String cookie) {
+	@JsonProperty("deviceSessionId")
+	public String getDeviceSessionId() {
 
-        this.cookie = cookie;
-    }
+		return deviceSessionId;
+	}
 
-    @JsonProperty("userAgent")
-    public String getUserAgent() {
+	@JsonProperty("deviceSessionId")
+	public void setDeviceSessionId(String deviceSessionId) {
 
-        return userAgent;
-    }
+		this.deviceSessionId = deviceSessionId;
+	}
 
-    @JsonProperty("userAgent")
-    public void setUserAgent(String userAgent) {
+	@JsonProperty("ipAddress")
+	public String getIpAddress() {
 
-        this.userAgent = userAgent;
-    }
+		return ipAddress;
+	}
 
-    @Override
-    public String toString() {
+	@JsonProperty("ipAddress")
+	public void setIpAddress(String ipAddress) {
 
-        return new ToStringBuilder(this).append("order", order).append("payer", payer).append("creditCard", creditCard)
-                .append("type", type).append("paymentMethod", paymentMethod).append("paymentCountry", paymentCountry)
-                .append("deviceSessionId", deviceSessionId).append("ipAddress", ipAddress).append("cookie", cookie)
-                .append("userAgent", userAgent).toString();
-    }
+		this.ipAddress = ipAddress;
+	}
 
+	@JsonProperty("cookie")
+	public String getCookie() {
+
+		return cookie;
+	}
+
+	@JsonProperty("cookie")
+	public void setCookie(String cookie) {
+
+		this.cookie = cookie;
+	}
+
+	@JsonProperty("userAgent")
+	public String getUserAgent() {
+
+		return userAgent;
+	}
+
+	@JsonProperty("userAgent")
+	public void setUserAgent(String userAgent) {
+
+		this.userAgent = userAgent;
+	}
+
+	@Override public String toString() {
+
+		return "Transaction{" +
+				"order=" + paymentOrder +
+				", payer=" + paymentPayer +
+				", creditCard=" + creditCard +
+				", type='" + type + '\'' +
+				", paymentMethod='" + paymentMethod + '\'' +
+				", paymentCountry='" + paymentCountry + '\'' +
+				", deviceSessionId='" + deviceSessionId + '\'' +
+				", ipAddress='" + ipAddress + '\'' +
+				", cookie='" + cookie + '\'' +
+				", userAgent='" + userAgent + '\'' +
+				'}';
+	}
 }

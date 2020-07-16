@@ -9,13 +9,17 @@ import com.prototype.ecommerce.model.Order;
 import com.prototype.ecommerce.model.Product;
 import com.prototype.ecommerce.model.User;
 import com.prototype.ecommerce.model.dtos.OrderDto;
+import com.prototype.ecommerce.model.dtos.Payer;
 import com.prototype.ecommerce.services.OrderService;
+import com.prototype.ecommerce.services.PaymentService;
+import com.prototype.ecommerce.services.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.stubbing.Answer;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,9 +52,26 @@ class OrderControllerTest {
 	OrderService orderService;
 
 	/**
+	 * Mocked service used in {@linkplain OrderController}.
+	 */
+	@Mock
+	PaymentService paymentService;
+
+	/**
+	 * Mocked service used in {@linkplain OrderController}.
+	 */
+	@Mock
+	ProductService productService;
+
+	/**
 	 * Example of orders to make the tests.
 	 */
 	ArrayList<Order> orders;
+
+	/**
+	 * Example of orderDto to make tests.
+	 */
+	OrderDto orderDto;
 
 	/**
 	 * Create orders to make the tests.
@@ -58,18 +79,23 @@ class OrderControllerTest {
 	@BeforeEach
 	private void initUseCase() {
 
+		Address address = new Address("carrera 2", "casa 1", "Bogota", "BogotaDC", 1233);
 		Product p = new Product(11, "PRODUCT1", "Product desc", 100, 15000);
 		User u = new User("Nicolas", "HJGUJ", "nicoga97@gmail.com", "ROLE_ADMIN");
 		User u2 = new User("Camilo", "HJGUJfdg", "camilo@gmail.com", "ROLE_ADMIN");
-		Order order1 = new Order(1, "APROVED", 150000, new Date(),
+		Order order1 = new Order(1, "APPROVED", 150000, new Date(),
 				"ghjkkj", "klhjk", 10, p, u2, "34235432", "345345",
-				new Address("EWRDWE", "PTO301", "BOGOTA", "BOGOTADC", 455));
+				address);
 		Order order2 = new Order(2, "PENDING", 15000, new Date(),
 				"ghjkHkj", "klHJJhjk", 1, p, u, "34235432", "345345",
-				new Address("EWRDWE", "PTO301", "BOGOTA", "BOGOTADC", 4565));
+				address);
 		orders = new ArrayList<>();
 		orders.add(order1);
 		orders.add(order2);
+		Payer payer = new Payer("Nicolas", "nicoga97@gmail.com", "6778889", "345677", address, "563836378363", "234",
+				"2021/12", "NICOLAS GARCIA", "VISA");
+		orderDto = new OrderDto(0, "APPROVED", 150000, new Date(), "hdewhj786dwedfw", "bxwjghdv234gvg3hf3",
+				10, "Nicolas", "536373", "45677890", address, payer, p, u);
 	}
 
 	/**
@@ -86,14 +112,23 @@ class OrderControllerTest {
 	}
 
 	/**
-	 * Test the {@linkplain OrderController#getOrdersByUserId(String)} ()} method.
+	 * Test the {@linkplain OrderController#doRefundHandler(String)} method.
 	 *
 	 * @author Nicolas Garcia Rey (nicolas.garcia@payulatam.com)
 	 * @date 25/06/2020
 	 */
 	@Test
-	void getOrdersByUserIdTest() {
+	void doRefundHandlerTest() {
 
+		when(orderService.updateOrder(any(Order.class))).thenAnswer(
+				(Answer<Order>) invocation -> {
+
+					Order o = (Order) invocation.getArguments()[0];
+					Object mock = invocation.getMock();
+					o.setState("REFUNDED");
+					return o;
+				});
+		assertEquals("REFUNDED", orderController.updateOrderHandler(orders.get(0)).getBody().getState());
 	}
 
 	/**
@@ -103,11 +138,15 @@ class OrderControllerTest {
 	 * @date 25/06/2020
 	 */
 	@Test
-	void createOrderHandlerTest() {
+	void createAndPayOrderHandlerTest() {
 
-		when(orderService.createOrder(any(OrderDto.class))).then(returnsFirstArg());
-		//TODO
-		//assertEquals(order, orderController.createOrderHandler(order).getBody());
+		when(productService.updateProduct(any(Product.class))).then(returnsFirstArg());
+		when(orderService.createOrder(orderDto)).thenReturn(orders.get(0));
+		when(paymentService.doPayment(orderDto)).thenReturn(orders.get(0));
+		when(orderService.updateOrder(any(Order.class))).thenReturn(orders.get(0));
+		assertEquals(orders.get(0), orderController.createAndPayOrderHandler(orderDto).getBody());
+		assertEquals(orders.get(0).getProduct().getAvailableUnits() - 1,
+				orderController.createAndPayOrderHandler(orderDto).getBody().getProduct().getAvailableUnits());
 	}
 
 	/**

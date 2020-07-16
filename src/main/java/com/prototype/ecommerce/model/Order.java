@@ -7,6 +7,7 @@ package com.prototype.ecommerce.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Order definition.
@@ -161,7 +162,7 @@ public class Order implements Serializable {
 
 	public String getState() {
 
-		return state;
+		return state.trim();
 	}
 
 	public void setState(String state) {
@@ -274,11 +275,38 @@ public class Order implements Serializable {
 				", transactionId='" + transactionId + '\'' +
 				", paymentOrderId='" + paymentOrderId + '\'' +
 				", units=" + units +
-				", buyerDniNumber=" + buyerDniNumber +
-				", buyerPhone=" + buyerPhone +
+				", buyerDniNumber='" + buyerDniNumber + '\'' +
+				", buyerPhone='" + buyerPhone + '\'' +
 				", shippingAddress=" + shippingAddress +
 				", product=" + product +
 				", user=" + user +
 				'}';
+	}
+
+	@Override public boolean equals(Object o) {
+
+		if (this == o)
+			return true;
+		if (!(o instanceof Order))
+			return false;
+		Order order = (Order) o;
+		return id == order.id &&
+				Float.compare(order.total, total) == 0 &&
+				units == order.units &&
+				Objects.equals(state, order.state) &&
+				Objects.equals(date, order.date) &&
+				Objects.equals(transactionId, order.transactionId) &&
+				Objects.equals(paymentOrderId, order.paymentOrderId) &&
+				Objects.equals(buyerDniNumber, order.buyerDniNumber) &&
+				Objects.equals(buyerPhone, order.buyerPhone) &&
+				Objects.equals(shippingAddress, order.shippingAddress) &&
+				Objects.equals(product, order.product) &&
+				Objects.equals(user, order.user);
+	}
+
+	@Override public int hashCode() {
+
+		return Objects.hash(id, state, total, date, transactionId, paymentOrderId, units, buyerDniNumber, buyerPhone,
+				shippingAddress, product, user);
 	}
 }

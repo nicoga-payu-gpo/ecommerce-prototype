@@ -1,131 +1,145 @@
-
+/*
+ * PayU Latam - Copyright (c) 2013 - 2020
+ * http://www.payu.com.co
+ */
 package com.prototype.ecommerce.model.paymentpojos.refundrequest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.prototype.ecommerce.model.paymentpojos.Request;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import com.prototype.ecommerce.model.paymentpojos.paymentrequest.Merchant;
 
 import java.io.Serializable;
 
+/**
+ * POJO of the refund request.
+ *
+ * @author Nicolas Garcia (nicolas.garcia@payulatam.com)
+ * @version 1.0
+ * @since 1.0
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "language",
-        "command",
-        "merchant",
-        "transaction",
-        "test"
+		"language",
+		"command",
+		"merchant",
+		"transaction",
+		"test"
 })
-public class RefundRequestPayu implements Serializable, Request {
+public class RefundRequestPayu extends Request implements Serializable {
 
-    private final static long serialVersionUID = 7858223410938816825L;
+	/**
+	 * Serializable class  version number.
+	 */
+	private static final long serialVersionUID = 7858223410938816825L;
 
-    @JsonProperty("language")
-    private String language;
+	/**
+	 * Language of the request.
+	 */
+	@JsonProperty("language")
+	private String language;
 
-    @JsonProperty("command")
-    private String command;
+	/**
+	 * Merchant info.
+	 */
+	@JsonProperty("merchant")
+	private Merchant refundMerchant;
 
-    @JsonProperty("merchant")
-    private RefundMerchant refundMerchant;
+	/**
+	 * Transaction details.
+	 */
+	@JsonProperty("transaction")
+	private RefundTransaction refundTransaction;
 
-    @JsonProperty("transaction")
-    private Transaction transaction;
+	/**
+	 * Test indicator.
+	 */
+	@JsonProperty("test")
+	private Boolean test;
 
-    @JsonProperty("test")
-    private Boolean test;
+	/**
+	 * No args constructor for use in serialization
+	 */
+	public RefundRequestPayu() {
 
-    /**
-     * No args constructor for use in serialization
-     */
-    public RefundRequestPayu() {
+	}
 
-    }
+	/**
+	 * @param test              test indicator.
+	 * @param refundMerchant    Merchant details.
+	 * @param language          Language of the request.
+	 * @param command           Command to perform.
+	 * @param refundTransaction Transaction details.
+	 */
+	public RefundRequestPayu(String language, String command, Merchant refundMerchant,
+			RefundTransaction refundTransaction,
+			Boolean test) {
 
-    /**
-     * @param test
-     * @param refundMerchant
-     * @param language
-     * @param command
-     * @param transaction
-     */
-    public RefundRequestPayu(String language, String command, RefundMerchant refundMerchant, Transaction transaction,
-            Boolean test) {
+		super();
+		this.language = language;
+		this.command = command;
+		this.refundMerchant = refundMerchant;
+		this.refundTransaction = refundTransaction;
+		this.test = test;
+	}
 
-        super();
-        this.language = language;
-        this.command = command;
-        this.refundMerchant = refundMerchant;
-        this.transaction = transaction;
-        this.test = test;
-    }
+	@JsonProperty("language")
+	public String getLanguage() {
 
-    @JsonProperty("language")
-    public String getLanguage() {
+		return language;
+	}
 
-        return language;
-    }
+	@JsonProperty("language")
+	public void setLanguage(String language) {
 
-    @JsonProperty("language")
-    public void setLanguage(String language) {
+		this.language = language;
+	}
 
-        this.language = language;
-    }
+	@JsonProperty("merchant")
+	public Merchant getRefundMerchant() {
 
-    @JsonProperty("command")
-    public String getCommand() {
+		return refundMerchant;
+	}
 
-        return command;
-    }
+	@JsonProperty("merchant")
+	public void setRefundMerchant(Merchant refundMerchant) {
 
-    @JsonProperty("command")
-    public void setCommand(String command) {
+		this.refundMerchant = refundMerchant;
+	}
 
-        this.command = command;
-    }
+	@JsonProperty("transaction")
+	public RefundTransaction getRefundTransaction() {
 
-    @JsonProperty("merchant")
-    public RefundMerchant getRefundMerchant() {
+		return refundTransaction;
+	}
 
-        return refundMerchant;
-    }
+	@JsonProperty("transaction")
+	public void setRefundTransaction(RefundTransaction refundTransaction) {
 
-    @JsonProperty("merchant")
-    public void setRefundMerchant(RefundMerchant refundMerchant) {
+		this.refundTransaction = refundTransaction;
+	}
 
-        this.refundMerchant = refundMerchant;
-    }
+	@JsonProperty("test")
+	public Boolean getTest() {
 
-    @JsonProperty("transaction")
-    public Transaction getTransaction() {
+		return test;
+	}
 
-        return transaction;
-    }
+	@JsonProperty("test")
+	public void setTest(Boolean test) {
 
-    @JsonProperty("transaction")
-    public void setTransaction(Transaction transaction) {
+		this.test = test;
+	}
 
-        this.transaction = transaction;
-    }
+	@Override public String toString() {
 
-    @JsonProperty("test")
-    public Boolean getTest() {
-
-        return test;
-    }
-
-    @JsonProperty("test")
-    public void setTest(Boolean test) {
-
-        this.test = test;
-    }
-
-    @Override
-    public String toString() {
-
-        return new ToStringBuilder(this).append("language", language).append("command", command).append("merchant",
-                refundMerchant).append("transaction", transaction).append("test", test).toString();
-    }
-
+		return "RefundRequestPayu{" +
+				"language='" + language + '\'' +
+				", command='" + command + '\'' +
+				", refundMerchant=" + refundMerchant +
+				", transaction=" + refundTransaction +
+				", test=" + test +
+				'}';
+	}
 }

@@ -6,6 +6,8 @@ package com.prototype.ecommerce.services;
 
 import com.prototype.ecommerce.model.Product;
 import com.prototype.ecommerce.repositories.ProductRepository;
+import com.prototype.ecommerce.services.servicesImpl.OrderServiceImpl;
+import com.prototype.ecommerce.services.servicesImpl.ProductServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

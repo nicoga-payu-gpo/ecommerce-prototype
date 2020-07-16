@@ -7,10 +7,16 @@ package com.prototype.ecommerce.model.paymentpojos.paymentrequest;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.Serializable;
 
+/**
+ * POJO address for a Payu payment request.
+ *
+ * @author Nicolas Garcia (nicolas.garcia@payulatam.com)
+ * @version 1.0
+ * @since 1.0
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "street1",
@@ -21,35 +27,59 @@ import java.io.Serializable;
         "postalCode",
         "phone"
 })
-public class Address implements Serializable {
+public class PaymentAddress implements Serializable {
 
+    /**
+     * Serializable class version number
+     */
     private static final long serialVersionUID = -5851712143825069161L;
 
+    /**
+     * Street 1 of the address.
+     */
     @JsonProperty("street1")
     private String street1;
 
+    /**
+     * Street 2 of the address.
+     */
     @JsonProperty("street2")
     private String street2;
 
+    /**
+     * City of the address.
+     */
     @JsonProperty("city")
     private String city;
 
+    /**
+     * State of the address.
+     */
     @JsonProperty("state")
     private String state;
 
+    /**
+     * Country of the address.
+     */
     @JsonProperty("country")
     private String country;
 
+    /**
+     * Postal code of the address.
+     */
     @JsonProperty("postalCode")
     private String postalCode;
 
+    /**
+     * Phone number of the address.
+     */
     @JsonProperty("phone")
     private String phone;
 
     /**
      * No args constructor for use in serialization
      */
-    public Address() {
+    public PaymentAddress() {
 
     }
 
@@ -62,7 +92,7 @@ public class Address implements Serializable {
      * @param street2    Street additional details,
      * @param state      State.
      */
-    public Address(String street1, String street2, String city, String state, String country, String postalCode,
+    public PaymentAddress(String street1, String street2, String city, String state, String country, String postalCode,
             String phone) {
 
         super();
@@ -159,12 +189,16 @@ public class Address implements Serializable {
         this.phone = phone;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
 
-        return new ToStringBuilder(this).append("street1", street1).append("street2", street2).append("city", city)
-                .append("state", state).append("country", country).append("postalCode", postalCode)
-                .append("phone", phone).toString();
+        return "Address{" +
+                "street1='" + street1 + '\'' +
+                ", street2='" + street2 + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", country='" + country + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
     }
-
 }

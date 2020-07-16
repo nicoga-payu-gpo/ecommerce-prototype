@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 
@@ -85,5 +86,19 @@ class ProductControllerTest {
 		Product p = new Product(1, "Product1", "Description example", 100, 15000);
 		when(productService.updateProduct(any(Product.class))).then(returnsFirstArg());
 		assertEquals(p, productController.updateProductHandler(p).getBody());
+	}
+
+	/**
+	 * Test the {@linkplain ProductController#deleteProductHandler(String)}  method.
+	 *
+	 * @author Nicolas Garcia Rey (nicolas.garcia@payulatam.com)
+	 * @date 25/06/2020
+	 */
+	@Test
+	void deleteProductHandlerTest() {
+
+		Product p = new Product(1, "Product1", "Description example", 100, 15000);
+		assertEquals(HttpStatus.ACCEPTED,
+				productController.deleteProductHandler(Integer.toString(p.getId())).getStatusCode());
 	}
 }

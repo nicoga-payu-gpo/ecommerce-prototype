@@ -9,7 +9,9 @@ import com.prototype.ecommerce.model.Order;
 import com.prototype.ecommerce.model.Product;
 import com.prototype.ecommerce.model.User;
 import com.prototype.ecommerce.model.dtos.OrderDto;
+import com.prototype.ecommerce.model.dtos.Payer;
 import com.prototype.ecommerce.repositories.OrderRepository;
+import com.prototype.ecommerce.services.servicesImpl.OrderServiceImpl;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,7 +53,12 @@ class OrderServiceImplTest {
 	/**
 	 * Order to do de tests.
 	 */
-	private Order o;
+	private Order order;
+
+	/**
+	 * Order DTO to do de tests.
+	 */
+	private OrderDto orderDto;
 
 	/**
 	 * Create an order to make the tests.
@@ -59,12 +66,15 @@ class OrderServiceImplTest {
 	@BeforeEach
 	private void initUseCase() {
 
+		User u = new User("Nicolas", "HJGUJ", "nicoga97@gmail.com", "ROLE_ADMIN");
+		Address address = new Address("EWRDWE", "PTO301", "BOGOTA", "BOGOTADC", 4565);
 		Product p = new Product(1, "PRODUCT1", "Product desc", 100, 15000);
-		o = new Order(2, "APROVED", 150000, new Date(),
-				"ghjkkj", "klhjk",
-				10, p, new User("Nicolas", "HJGUJ", "nicoga97@gmail.com", "ROLE_ADMIN"),
-				"34235432", "345345",
-				new Address("EWRDWE", "PTO301", "BOGOTA", "BOGOTADC", 4565));
+		order = new Order(2, "APPROVED", 150000, new Date(), "hdewhj786dwedfw", "bxwjghdv234gvg3hf3",
+				10, p, u, "536373", "45677890", address);
+		Payer payer = new Payer("Nicolas", "nicoga97@gmail.com", "6778889", "345677", address, "563836378363", "234",
+				"2021/12", "NICOLAS GARCIA", "VISA");
+		orderDto = new OrderDto(2, "APPROVED", 150000, new Date(), "hdewhj786dwedfw", "bxwjghdv234gvg3hf3",
+				10, "Nicolas", "536373", "45677890", address, payer, p, u);
 	}
 
 	/**
@@ -76,10 +86,11 @@ class OrderServiceImplTest {
 	@Test
 	void createOrderTest() {
 
-		when(orderRepository.save(any(Order.class))).then(returnsFirstArg());
-		//TODO
-		/*Order order = orderService.createOrder(o);
-		Assert.assertEquals(o, order);*/
+		order = new Order(order.getId(), order.getState(), order.getTotal(), new Date(),
+				order.getTransactionId(), order.getPaymentOrderId(), order.getUnits(), order.getProduct(),
+				order.getUser(), order.getBuyerDniNumber(), order.getBuyerPhone(), order.getShippingAddress());
+		when(orderRepository.save(any(Order.class))).thenReturn(order);
+		Assert.assertEquals(order, orderService.createOrder(orderDto));
 	}
 
 	/**
@@ -91,7 +102,7 @@ class OrderServiceImplTest {
 	@Test
 	void getOrdersTest() {
 
-		List<Order> orders = Collections.singletonList(o);
+		List<Order> orders = Collections.singletonList(order);
 		when(orderRepository.findAll()).thenReturn(orders);
 		Assert.assertEquals(orders, orderService.getOrders());
 	}
@@ -105,8 +116,9 @@ class OrderServiceImplTest {
 	 */
 	@Test
 	void updateOrderTest() {
+
 		when(orderRepository.save(any(Order.class))).then(returnsFirstArg());
-		o.setUnits(50);
-		Assert.assertEquals(o,orderService.updateOrder(o));
+		order.setUnits(50);
+		Assert.assertEquals(order, orderService.updateOrder(order));
 	}
 }

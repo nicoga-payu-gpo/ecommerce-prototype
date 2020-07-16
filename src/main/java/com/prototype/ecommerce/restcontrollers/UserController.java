@@ -10,7 +10,10 @@ import com.prototype.ecommerce.utils.StringUtils;
 import com.prototype.ecommerce.utils.Token;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controller for the platform users.
@@ -63,14 +66,15 @@ public class UserController {
 	public ResponseEntity<Token> loginUserHandler(@RequestBody User login) {
 
 		if (login.getEmail() == null || login.getPassword() == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		User user = userService.getUser(login.getEmail());
 		if (user == null || !StringUtils.isPasswordValid(login.getPassword(), user.getPassword().trim())) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		user.setPassword(null);
 		Token token = new Token(user);
 		return new ResponseEntity<>(token, HttpStatus.ACCEPTED);
 	}
+
 }
