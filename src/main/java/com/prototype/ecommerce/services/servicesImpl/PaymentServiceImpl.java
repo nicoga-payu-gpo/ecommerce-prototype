@@ -77,10 +77,15 @@ public class PaymentServiceImpl implements PaymentService {
 			entity.setState(response.getTxStatus());
 			entity.setTransactionId(response.getTransactionResponse().getTransactionId());
 			entity.setPaymentOrderId(response.getTransactionResponse().getOrderId());
-			LOGGER.info("Payment transaction, payment approved:{}", entity);
+			if (response.getTxStatus().equals("APPROVED")) {
+				LOGGER.info("Payment transaction, payment approved:{}", entity);
+			} else {
+				LOGGER.warn("Payment transaction, payment declined:{}", entity);
+			}
+
 		} else {
 			entity.setState(response.getStatus());
-			LOGGER.warn("Payment transaction, payment declined:{}",entity);
+			LOGGER.warn("Payment transaction, payment error:{}", entity);
 		}
 		return entity;
 	}

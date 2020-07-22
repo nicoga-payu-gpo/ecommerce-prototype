@@ -100,6 +100,10 @@ public class OrderController {
 		try {
 			Order order = orderService.getOrdersById(orderId);
 			order = paymentService.doRefund(order);
+			if (order.getState().equals("REFUNDED")) {
+				order.getProduct().setAvailableUnits(order.getProduct().getAvailableUnits() + 1);
+				productService.updateProduct(order.getProduct());
+			}
 			return new ResponseEntity<>(orderService.updateOrder(order), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
 			LOGGER.error("Error while processing refund for order id:{} caused by:{}", orderId, ex.getMessage());

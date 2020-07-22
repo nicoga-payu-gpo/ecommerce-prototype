@@ -43,6 +43,10 @@ class PayuAdapterTest {
 	@Test
 	void createPaymentRequest() {
 
+		payuAdapter.setAccountId("512321");
+		payuAdapter.setApiKey("4Vj8eK4rloUd272L48hsrarnUA");
+		payuAdapter.setApiLogin("pRRXKOl8ikMmt9u");
+		payuAdapter.setMerchantId("508029");
 		Address address = new Address("carrera 2", "casa 1", "Bogota", "BogotaDC", 1233);
 		Product p = new Product(11, "PRODUCT1", "Product desc", 100, 15000);
 		User u = new User("Nicolas", "HJGUJ", "nicoga97@gmail.com", "ROLE_ADMIN");
@@ -195,6 +199,10 @@ class PayuAdapterTest {
 	@Test
 	void createRefundRequest() {
 
+		payuAdapter.setAccountId("512321");
+		payuAdapter.setApiKey("4Vj8eK4rloUd272L48hsrarnUA");
+		payuAdapter.setApiLogin("pRRXKOl8ikMmt9u");
+		payuAdapter.setMerchantId("508029");
 		Order order = new Order();
 		order.setTransactionId("44671a74-6e62-488d-997f-01f36c145418");
 		order.setPaymentOrderId("120244079");

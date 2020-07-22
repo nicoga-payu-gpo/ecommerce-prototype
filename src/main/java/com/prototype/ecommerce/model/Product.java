@@ -181,8 +181,8 @@ public class Product implements Serializable {
 
 		return "Product{" +
 				"id=" + id +
-				", name='" + name + '\'' +
-				", description='" + description + '\'' +
+				", name='" + name.trim() + '\'' +
+				", description='" + description.trim() + '\'' +
 				", availableUnits=" + availableUnits +
 				", price=" + price +
 				'}';
